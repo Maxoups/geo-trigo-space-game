@@ -1,0 +1,212 @@
+[gd_scene load_steps=27 format=3 uid="uid://bt4cdoblfhlft"]
+
+[ext_resource type="Shader" uid="uid://bdw0786jigflv" path="res://resources/shaders/grid_background.gdshader" id="1_nnsk1"]
+[ext_resource type="PackedScene" uid="uid://dr3q0tn2htik5" path="res://scenes/geometry/point.tscn" id="2_71j4m"]
+[ext_resource type="Texture2D" uid="uid://crm4hvl7kfeba" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_001.png" id="3_k0juu"]
+[ext_resource type="Texture2D" uid="uid://k5fyi4spnvfb" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_002.png" id="5_i7141"]
+[ext_resource type="Texture2D" uid="uid://gcu47ams1syf" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_003.png" id="6_4mrxx"]
+[ext_resource type="Texture2D" uid="uid://d4kuj5ab6486x" path="res://resources/SpaceShooterSprites/Rockets/spaceRockets_001.png" id="7_7iits"]
+[ext_resource type="Texture2D" uid="uid://c80fq8cdd4mk7" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_004.png" id="7_7r4gi"]
+[ext_resource type="Texture2D" uid="uid://bmxvsgekfxf5d" path="res://resources/SpaceShooterSprites/Rockets/spaceRockets_002.png" id="8_oo54l"]
+[ext_resource type="Texture2D" uid="uid://c32quei6bffx" path="res://resources/SpaceShooterSprites/Rockets/spaceRockets_003.png" id="9_kpybi"]
+[ext_resource type="Texture2D" uid="uid://cah3k41u01bfv" path="res://resources/SpaceShooterSprites/Station/spaceStation_018.png" id="10_ctatt"]
+[ext_resource type="Texture2D" uid="uid://5sbo5wnny7lb" path="res://resources/SpaceShooterSprites/Station/spaceStation_019.png" id="11_xgqkh"]
+[ext_resource type="Texture2D" uid="uid://dtgfmqet515as" path="res://resources/SpaceShooterSprites/Station/spaceStation_017.png" id="12_munwf"]
+[ext_resource type="Texture2D" uid="uid://qgpmxb1al0s7" path="res://resources/SpaceShooterSprites/Station/spaceStation_020.png" id="13_ts3gi"]
+[ext_resource type="PackedScene" uid="uid://cflvb7fjyk7nu" path="res://scenes/geometry/ship.tscn" id="14_7iits"]
+[ext_resource type="Texture2D" uid="uid://bunx6vad6gnm0" path="res://resources/SpaceShooterSprites/Ships/spaceShips_002.png" id="15_37qwj"]
+[ext_resource type="Texture2D" uid="uid://booifpliwnu8a" path="res://resources/SpaceShooterSprites/Ships/spaceShips_003.png" id="16_navra"]
+[ext_resource type="Texture2D" uid="uid://vysk2kpkqp6t" path="res://resources/SpaceShooterSprites/Ships/spaceShips_004.png" id="17_luhhm"]
+[ext_resource type="Texture2D" uid="uid://dfluwachxur3n" path="res://resources/SpaceShooterSprites/Ships/spaceShips_005.png" id="18_fh13f"]
+[ext_resource type="Texture2D" uid="uid://bjn8wbbvd8ybk" path="res://resources/SpaceShooterSprites/Ships/spaceShips_007.png" id="19_rup4s"]
+[ext_resource type="Texture2D" uid="uid://ddrn5nx3cgf24" path="res://resources/SpaceShooterSprites/Ships/spaceShips_008.png" id="20_4kbfs"]
+[ext_resource type="Texture2D" uid="uid://gcls55j21nnv" path="res://resources/SpaceShooterSprites/Ships/spaceShips_009.png" id="21_f17e3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rwgxs"]
+shader = ExtResource("1_nnsk1")
+shader_parameter/scale = Vector2(0.01, 0.01)
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/background_color = Color(0.2, 0.2, 0.2, 0.2)
+shader_parameter/checkered_color = Color(0, 0, 0, 0.243137)
+shader_parameter/coarse_grid_color = Color(1, 1, 1, 0.690196)
+shader_parameter/coarse_grid_line_width = Vector2(0.05, 0.05)
+shader_parameter/fine_grid_color = Color(0.8, 0.8, 0.8, 0.839216)
+shader_parameter/fine_grid_subdivisions = 5.0
+shader_parameter/fine_grid_line_width = Vector2(0.03, 0.03)
+
+[sub_resource type="Shader" id="Shader_7iits"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 original: source_color;
+uniform vec4 replace: source_color;
+
+const float precision = 0.2;
+
+
+vec4 swap_color(vec4 color){
+	if (distance(color, original) <= precision){
+		return replace;
+	}
+	return color;
+}
+
+
+void fragment() {
+	COLOR = swap_color(texture(TEXTURE, UV));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qfnet"]
+resource_local_to_scene = true
+shader = SubResource("Shader_7iits")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(0, 0, 0.956863, 1)
+
+[sub_resource type="Shader" id="Shader_oo54l"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 original: source_color;
+uniform vec4 replace: source_color;
+
+const float precision = 0.2;
+
+
+vec4 swap_color(vec4 color){
+	if (distance(color, original) <= precision){
+		return replace;
+	}
+	return color;
+}
+
+
+void fragment() {
+	COLOR = swap_color(texture(TEXTURE, UV));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0juu"]
+resource_local_to_scene = true
+shader = SubResource("Shader_oo54l")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(1, 0, 0, 1)
+
+[node name="World" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Grid" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_rwgxs")
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -5000.0
+offset_top = -5000.0
+offset_right = 5000.0
+offset_bottom = 5000.0
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+
+[node name="PointA" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_qfnet")
+position = Vector2(154, 150)
+point_color = Color(0, 0, 0.956863, 1)
+
+[node name="PointB" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_k0juu")
+position = Vector2(-471, -150)
+point_name = "B"
+point_color = Color(1, 0, 0, 1)
+
+[node name="SpaceMeteors001" type="Sprite2D" parent="."]
+position = Vector2(530, -341)
+texture = ExtResource("3_k0juu")
+
+[node name="SpaceMeteors002" type="Sprite2D" parent="."]
+position = Vector2(-720, -274)
+scale = Vector2(0.241706, 0.241706)
+texture = ExtResource("5_i7141")
+
+[node name="SpaceMeteors003" type="Sprite2D" parent="."]
+position = Vector2(-234, -431)
+scale = Vector2(0.565909, 0.565909)
+texture = ExtResource("6_4mrxx")
+
+[node name="SpaceMeteors004" type="Sprite2D" parent="."]
+position = Vector2(-197, 297)
+scale = Vector2(0.606383, 0.606383)
+texture = ExtResource("7_7r4gi")
+
+[node name="SpaceRockets001" type="Sprite2D" parent="."]
+position = Vector2(-2057, -273)
+texture = ExtResource("7_7iits")
+
+[node name="SpaceRockets002" type="Sprite2D" parent="."]
+position = Vector2(-3009, -256)
+texture = ExtResource("8_oo54l")
+
+[node name="SpaceRockets003" type="Sprite2D" parent="."]
+position = Vector2(-2605, 185)
+scale = Vector2(0.609574, 0.609574)
+texture = ExtResource("9_kpybi")
+
+[node name="SpaceStation018" type="Sprite2D" parent="."]
+position = Vector2(1121, -95.0001)
+rotation = 0.361875
+scale = Vector2(0.692307, 0.692307)
+texture = ExtResource("10_ctatt")
+
+[node name="SpaceStation019" type="Sprite2D" parent="."]
+position = Vector2(182, -104)
+texture = ExtResource("11_xgqkh")
+
+[node name="SpaceStation017" type="Sprite2D" parent="."]
+position = Vector2(92.5, -800.124)
+scale = Vector2(0.659884, 0.659884)
+texture = ExtResource("12_munwf")
+
+[node name="SpaceStation020" type="Sprite2D" parent="."]
+position = Vector2(-2309, -506)
+texture = ExtResource("13_ts3gi")
+
+[node name="Ship" parent="." instance=ExtResource("14_7iits")]
+position = Vector2(-676, 231)
+
+[node name="Label" parent="Ship" index="0"]
+text = "S (x=-6.76, y=2.31, r=-109.28)"
+
+[node name="Sprite" parent="Ship" index="1"]
+rotation = -1.90723
+
+[node name="SpaceShips002" type="Sprite2D" parent="."]
+position = Vector2(-1603, -433)
+texture = ExtResource("15_37qwj")
+
+[node name="SpaceShips003" type="Sprite2D" parent="."]
+position = Vector2(-1529, -684)
+texture = ExtResource("16_navra")
+
+[node name="SpaceShips004" type="Sprite2D" parent="."]
+position = Vector2(-1806, -14)
+texture = ExtResource("17_luhhm")
+
+[node name="SpaceShips005" type="Sprite2D" parent="."]
+position = Vector2(-1936, 452)
+texture = ExtResource("18_fh13f")
+
+[node name="SpaceShips007" type="Sprite2D" parent="."]
+position = Vector2(-1070, -901)
+texture = ExtResource("19_rup4s")
+
+[node name="SpaceShips008" type="Sprite2D" parent="."]
+position = Vector2(-1484, 28)
+texture = ExtResource("20_4kbfs")
+
+[node name="SpaceShips009" type="Sprite2D" parent="."]
+position = Vector2(-1617, 405)
+texture = ExtResource("21_f17e3")
+
+[editable path="Ship"]
