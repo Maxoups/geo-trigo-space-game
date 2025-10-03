@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://bg4jokdf0h7pw"]
+
+[ext_resource type="PackedScene" uid="uid://cflvb7fjyk7nu" path="res://scenes/space_objects/ship.tscn" id="1_isupk"]
+[ext_resource type="Texture2D" uid="uid://vysk2kpkqp6t" path="res://resources/SpaceShooterSprites/Ships/spaceShips_004.png" id="2_yn7v5"]
+[ext_resource type="Texture2D" uid="uid://dfluwachxur3n" path="res://resources/SpaceShooterSprites/Ships/spaceShips_005.png" id="3_683g5"]
+[ext_resource type="Texture2D" uid="uid://ddrn5nx3cgf24" path="res://resources/SpaceShooterSprites/Ships/spaceShips_008.png" id="4_x7olw"]
+[ext_resource type="Texture2D" uid="uid://cqdsjbuqvdixm" path="res://resources/SpaceShooterSprites/Building/spaceBuilding_020.png" id="5_2bu30"]
+[ext_resource type="Texture2D" uid="uid://bwugleyy6hrye" path="res://resources/SpaceShooterSprites/Building/spaceBuilding_022.png" id="6_k7uog"]
+[ext_resource type="Texture2D" uid="uid://c4uabifm06eih" path="res://resources/SpaceShooterSprites/Parts/spaceParts_044.png" id="7_sfd36"]
+[ext_resource type="Texture2D" uid="uid://cmpdbttt2ybxb" path="res://resources/SpaceShooterSprites/Parts/spaceParts_043.png" id="8_j88c7"]
+
+[node name="MotherShip" node_paths=PackedStringArray("ship_root_node") instance=ExtResource("1_isupk")]
+ship_name = "Station"
+ship_root_node = NodePath("ShipSprites")
+
+[node name="Label" parent="." index="0"]
+offset_left = 210.667
+offset_top = -373.333
+offset_right = 964.667
+offset_bottom = -56.333
+text = "Station:
+    position = (x=0.00, y=0.00)
+    rotation = 0.00
+    scale = (x=0.75, y=0.75)"
+
+[node name="ShipSprites" type="Node2D" parent="." index="1"]
+
+[node name="SpaceShips004" type="Sprite2D" parent="ShipSprites" index="0"]
+z_index = 2
+position = Vector2(-0.599792, 131)
+texture = ExtResource("2_yn7v5")
+
+[node name="SpaceShips005" type="Sprite2D" parent="ShipSprites" index="1"]
+z_index = 2
+position = Vector2(-0.59993, -69)
+rotation = -3.13893
+texture = ExtResource("3_683g5")
+
+[node name="SpaceShips008" type="Sprite2D" parent="ShipSprites" index="2"]
+z_index = 2
+position = Vector2(-0.599792, -212)
+rotation = -3.14159
+texture = ExtResource("4_x7olw")
+
+[node name="SpaceBuilding020" type="Sprite2D" parent="ShipSprites" index="3"]
+z_index = 2
+position = Vector2(-0.599792, 178)
+rotation = -3.14159
+texture = ExtResource("5_2bu30")
+offset = Vector2(0, -22)
+
+[node name="SpaceBuilding023" type="Sprite2D" parent="ShipSprites" index="4"]
+z_index = 2
+position = Vector2(0.400085, -48)
+rotation = 3.14159
+texture = ExtResource("6_k7uog")
+offset = Vector2(0, -25)
+
+[node name="SpaceParts044" type="Sprite2D" parent="ShipSprites" index="5"]
+position = Vector2(-0.599792, -290)
+texture = ExtResource("7_sfd36")
+
+[node name="SpaceParts043" type="Sprite2D" parent="ShipSprites" index="6"]
+position = Vector2(-126.6, -231)
+texture = ExtResource("8_j88c7")
+
+[node name="SpaceParts045" type="Sprite2D" parent="ShipSprites" index="7"]
+position = Vector2(126.4, -231)
+texture = ExtResource("8_j88c7")

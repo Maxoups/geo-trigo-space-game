@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0ltusdhqx678"]
+
+[ext_resource type="PackedScene" uid="uid://cflvb7fjyk7nu" path="res://scenes/space_objects/ship.tscn" id="1_xmtrk"]
+[ext_resource type="Texture2D" uid="uid://b3rx5kue6ebev" path="res://resources/SpaceShooterSprites/Ships/spaceShips_001.png" id="2_x5pj3"]
+
+[node name="ExplorerShip" node_paths=PackedStringArray("ship_root_node") instance=ExtResource("1_xmtrk")]
+ship_root_node = NodePath("Sprite")
+
+[node name="Label" parent="." index="0"]
+offset_left = 33.0
+offset_top = -315.0
+offset_right = 787.0
+offset_bottom = 2.0
+text = "Ship:
+    position = (x=0.00, y=0.00)
+    rotation = 0.00
+    scale = (x=0.75, y=0.75)"
+
+[node name="Sprite" type="Sprite2D" parent="." index="1"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_x5pj3")

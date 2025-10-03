@@ -3,21 +3,23 @@ extends Node2D
 class_name Ship
 
 
-@export var ship_name := "S":
+@export var ship_name := "Ship":
 	set(value):
 		ship_name = value
-		update_label_text()
+		$Label.text = value
+@export var ship_root_node : Node2D
 var current_transform : Transform2D
 
 
-
 func _process(_delta: float) -> void:
-	if current_transform != $Sprite.global_transform:
-		current_transform = $Sprite.global_transform
+	if not is_instance_valid(ship_root_node):
+		return
+	if current_transform != ship_root_node.global_transform:
+		current_transform = ship_root_node.global_transform
 		update_label_text()
 
 func update_label_text() -> void:
-	var pos_x := position.x/100
-	var pos_y := position.y/100
-	var r : float = $Sprite.global_rotation_degrees
-	$Label.text = ship_name + " (x=%0.2f, y=%0.2f, r=%0.2f)" % [pos_x, pos_y, r]
+	var pos_x := position.x
+	var pos_y := position.y
+	var r : float = ship_root_node.global_rotation_degrees
+	$Label.text = ship_name + ":\n    position = (x=%0.2f, y=%0.2f)\n    rotation = %0.2f\n    scale = (x=%0.2f, y=%0.2f)" % [pos_x, pos_y, r, scale.x, scale.y]

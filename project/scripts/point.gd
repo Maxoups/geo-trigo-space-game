@@ -20,6 +20,6 @@ func _process(_delta: float) -> void:
 		update_label_text()
 
 func update_label_text() -> void:
-	var pos_x := position.x/100
-	var pos_y := position.y/100
+	var pos_x := position.x
+	var pos_y := position.y
 	$Label.text = point_name + " (x=%0.2f, y=%0.2f)" % [pos_x, pos_y]
