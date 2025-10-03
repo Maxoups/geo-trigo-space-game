@@ -11,7 +11,7 @@ shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
 shader_parameter/replace = Color(0, 0, 1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_dwkv2"]
-font_size = 64
+font_size = 56
 
 [node name="Point" type="Sprite2D"]
 z_index = 1
