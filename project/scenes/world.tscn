@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bt4cdoblfhlft"]
+[gd_scene load_steps=32 format=3 uid="uid://bt4cdoblfhlft"]
 
 [ext_resource type="Shader" uid="uid://bdw0786jigflv" path="res://resources/shaders/grid_background.gdshader" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://biqixxvye3fr2" path="res://scripts/world.gd" id="1_xgqkh"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://k5fyi4spnvfb" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_002.png" id="5_i7141"]
 [ext_resource type="Texture2D" uid="uid://gcu47ams1syf" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_003.png" id="6_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://c80fq8cdd4mk7" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_004.png" id="7_7r4gi"]
-[ext_resource type="Texture2D" uid="uid://cah3k41u01bfv" path="res://resources/SpaceShooterSprites/Station/spaceStation_018.png" id="10_ctatt"]
+[ext_resource type="PackedScene" uid="uid://cy7d5b1ckl2cj" path="res://scenes/space_objects/satellite.tscn" id="9_pm21f"]
 [ext_resource type="Texture2D" uid="uid://5sbo5wnny7lb" path="res://resources/SpaceShooterSprites/Station/spaceStation_019.png" id="11_xgqkh"]
 [ext_resource type="Texture2D" uid="uid://dtgfmqet515as" path="res://resources/SpaceShooterSprites/Station/spaceStation_017.png" id="12_munwf"]
 [ext_resource type="Script" uid="uid://basqjwhkm26mf" path="res://scripts/toggleable_object.gd" id="26_munwf"]
@@ -18,14 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://b0ltusdhqx678" path="res://scenes/space_objects/explorer_ship.tscn" id="41_rga7q"]
 [ext_resource type="PackedScene" uid="uid://bg4jokdf0h7pw" path="res://scenes/space_objects/mother_ship.tscn" id="42_6oujy"]
 [ext_resource type="Texture2D" uid="uid://bws73nhbyjla0" path="res://resources/SpaceShooterSprites/Missiles/spaceMissiles_013.png" id="45_5hglh"]
-[ext_resource type="Texture2D" uid="uid://ckedr58151cpb" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_001.png" id="46_qg546"]
-[ext_resource type="Texture2D" uid="uid://doycsgegdnn0c" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_002.png" id="47_pf35h"]
-[ext_resource type="Texture2D" uid="uid://bfvqgi8v4veju" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_003.png" id="48_iexy4"]
-[ext_resource type="Texture2D" uid="uid://d2guevsvld0m4" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_004.png" id="49_npbic"]
-[ext_resource type="Texture2D" uid="uid://dg07ulc7hyuqr" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_005.png" id="50_e6ckp"]
-[ext_resource type="Texture2D" uid="uid://c8764kb8vlmwm" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_007.png" id="51_mvg0v"]
-[ext_resource type="Texture2D" uid="uid://egcfmd31gfq6" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_008.png" id="52_h3odw"]
-[ext_resource type="Texture2D" uid="uid://ba3kui53dmume" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_010.png" id="53_5hl1e"]
 [ext_resource type="Texture2D" uid="uid://c3clt2b01bqdf" path="res://resources/SpaceShooterSprites/Effects/spaceEffects_018.png" id="54_66tox"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rwgxs"]
@@ -78,7 +70,7 @@ _data = {
 &"grid_idle": SubResource("Animation_ctatt")
 }
 
-[sub_resource type="Shader" id="Shader_ts3gi"]
+[sub_resource type="Shader" id="Shader_2lf6f"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -103,11 +95,11 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qfnet"]
 resource_local_to_scene = true
-shader = SubResource("Shader_ts3gi")
+shader = SubResource("Shader_2lf6f")
 shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
 shader_parameter/replace = Color(0, 0, 0.956863, 1)
 
-[sub_resource type="Shader" id="Shader_0nbtd"]
+[sub_resource type="Shader" id="Shader_7iits"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -132,7 +124,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k0juu"]
 resource_local_to_scene = true
-shader = SubResource("Shader_0nbtd")
+shader = SubResource("Shader_7iits")
 shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
 shader_parameter/replace = Color(1, 0, 0, 1)
 
@@ -224,67 +216,36 @@ position = Vector2(91, -459)
 scale = Vector2(0.606383, 0.606383)
 texture = ExtResource("7_7r4gi")
 
-[node name="SpaceStation018" type="Sprite2D" parent="."]
-position = Vector2(-1753, 475)
-rotation = 0.361875
-scale = Vector2(0.692307, 0.692307)
-texture = ExtResource("10_ctatt")
+[node name="Satellite" parent="." instance=ExtResource("9_pm21f")]
+position = Vector2(138, -226)
 
-[node name="SpaceStation019" type="Sprite2D" parent="."]
-position = Vector2(-2384, 827)
+[node name="Satellite2" parent="." instance=ExtResource("9_pm21f")]
+position = Vector2(-168.569, -408.625)
+scale = Vector2(0.426282, 0.426282)
+texture = ExtResource("33_1jxku")
+
+[node name="Satellite3" parent="." instance=ExtResource("9_pm21f")]
+position = Vector2(-7.99994, 432)
+rotation = 0.756364
 texture = ExtResource("11_xgqkh")
+
+[node name="Satellite4" parent="." instance=ExtResource("9_pm21f")]
+position = Vector2(-145, -578)
+rotation = -0.559566
+texture = ExtResource("32_x28ej")
 
 [node name="SpaceStation017" type="Sprite2D" parent="."]
 position = Vector2(-1420, 1054)
 scale = Vector2(0.659884, 0.659884)
 texture = ExtResource("12_munwf")
 
-[node name="SpaceBuilding014" type="Sprite2D" parent="."]
-position = Vector2(-1210, 760)
-texture = ExtResource("32_x28ej")
-
-[node name="SpaceBuilding015" type="Sprite2D" parent="."]
-position = Vector2(-807, 779)
-texture = ExtResource("33_1jxku")
-
 [node name="SpaceMissiles013" type="Sprite2D" parent="."]
 position = Vector2(-1227, -288)
 texture = ExtResource("45_5hglh")
 
-[node name="SpaceEffects002" type="Sprite2D" parent="."]
-position = Vector2(-1580, -280)
-texture = ExtResource("46_qg546")
-
-[node name="SpaceEffects004" type="Sprite2D" parent="."]
-position = Vector2(-1507, -293)
-texture = ExtResource("47_pf35h")
-
-[node name="SpaceEffects005" type="Sprite2D" parent="."]
-position = Vector2(-1725, -216)
-texture = ExtResource("48_iexy4")
-
-[node name="SpaceEffects006" type="Sprite2D" parent="."]
-position = Vector2(-1667, -177)
-texture = ExtResource("49_npbic")
-
-[node name="SpaceEffects007" type="Sprite2D" parent="."]
-position = Vector2(-1591, -199)
-texture = ExtResource("50_e6ckp")
-
-[node name="SpaceEffects008" type="Sprite2D" parent="."]
-position = Vector2(-1720, 30)
-texture = ExtResource("51_mvg0v")
-
-[node name="SpaceEffects009" type="Sprite2D" parent="."]
-position = Vector2(-1655, 46)
-texture = ExtResource("52_h3odw")
-
-[node name="SpaceEffects011" type="Sprite2D" parent="."]
-position = Vector2(-1771, 43)
-texture = ExtResource("53_5hl1e")
-
 [node name="SpaceEffects018" type="Sprite2D" parent="."]
-position = Vector2(-1464, -98)
+position = Vector2(-1226, -252)
+rotation = 3.14159
 texture = ExtResource("54_66tox")
 
 [node name="ExplorerShip" parent="." instance=ExtResource("41_rga7q")]
