@@ -7,7 +7,7 @@ class_name Ship
 	set(value):
 		ship_name = value
 		$Label.text = value
-@export var ship_root_node : Node2D
+@onready var ship_root_node : Node2D = $SpriteRoot
 var current_transform : Transform2D
 
 

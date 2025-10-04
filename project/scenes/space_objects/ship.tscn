@@ -25,3 +25,5 @@ label_settings = ExtResource("2_4d3q3")
 [node name="ToggleableObject" type="Node" parent="Label"]
 script = ExtResource("2_say45")
 metadata/_custom_type_script = "uid://basqjwhkm26mf"
+
+[node name="SpriteRoot" type="Node2D" parent="."]

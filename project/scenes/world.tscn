@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bt4cdoblfhlft"]
+[gd_scene load_steps=40 format=3 uid="uid://bt4cdoblfhlft"]
 
 [ext_resource type="Shader" uid="uid://bdw0786jigflv" path="res://resources/shaders/grid_background.gdshader" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://biqixxvye3fr2" path="res://scripts/world.gd" id="1_xgqkh"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://5sbo5wnny7lb" path="res://resources/SpaceShooterSprites/Station/spaceStation_019.png" id="11_xgqkh"]
 [ext_resource type="Texture2D" uid="uid://dtgfmqet515as" path="res://resources/SpaceShooterSprites/Station/spaceStation_017.png" id="12_munwf"]
 [ext_resource type="Script" uid="uid://basqjwhkm26mf" path="res://scripts/toggleable_object.gd" id="26_munwf"]
+[ext_resource type="Shader" uid="uid://dqf5bx8aala3w" path="res://resources/shaders/color_swap.gdshader" id="27_ts3gi"]
 [ext_resource type="Texture2D" uid="uid://c1gkupdtxvd5n" path="res://resources/SpaceShooterSprites/Building/spaceBuilding_014.png" id="32_x28ej"]
 [ext_resource type="Texture2D" uid="uid://dft52r8fw4t1a" path="res://resources/SpaceShooterSprites/Building/spaceBuilding_015.png" id="33_1jxku"]
 [ext_resource type="PackedScene" uid="uid://b0ltusdhqx678" path="res://scenes/space_objects/explorer_ship.tscn" id="41_rga7q"]
@@ -77,7 +78,7 @@ _data = {
 &"grid_idle": SubResource("Animation_ctatt")
 }
 
-[sub_resource type="Shader" id="Shader_munwf"]
+[sub_resource type="Shader" id="Shader_ts3gi"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -102,11 +103,11 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qfnet"]
 resource_local_to_scene = true
-shader = SubResource("Shader_munwf")
+shader = SubResource("Shader_ts3gi")
 shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
 shader_parameter/replace = Color(0, 0, 0.956863, 1)
 
-[sub_resource type="Shader" id="Shader_ts3gi"]
+[sub_resource type="Shader" id="Shader_0nbtd"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -131,9 +132,33 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k0juu"]
 resource_local_to_scene = true
-shader = SubResource("Shader_ts3gi")
+shader = SubResource("Shader_0nbtd")
 shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
 shader_parameter/replace = Color(1, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0nbtd"]
+resource_local_to_scene = true
+shader = ExtResource("27_ts3gi")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(0, 1, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37qwj"]
+resource_local_to_scene = true
+shader = ExtResource("27_ts3gi")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(1, 0, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_navra"]
+resource_local_to_scene = true
+shader = ExtResource("27_ts3gi")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(5.77569e-07, 0.389318, 0.37634, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_luhhm"]
+resource_local_to_scene = true
+shader = ExtResource("27_ts3gi")
+shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
+shader_parameter/replace = Color(0, 0, 0, 1)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_xgqkh")
@@ -175,19 +200,8 @@ width = 5.0
 
 [node name="PlayerCamera" parent="." instance=ExtResource("2_oo54l")]
 
-[node name="PointA" parent="." instance=ExtResource("2_71j4m")]
-material = SubResource("ShaderMaterial_qfnet")
-position = Vector2(91, 83)
-point_color = Color(0, 0, 0.956863, 1)
-
-[node name="PointB" parent="." instance=ExtResource("2_71j4m")]
-material = SubResource("ShaderMaterial_k0juu")
-position = Vector2(-511, -207)
-point_name = "B"
-point_color = Color(1, 0, 0, 1)
-
 [node name="SpaceMeteors001" type="Sprite2D" parent="."]
-position = Vector2(530, -341)
+position = Vector2(-352, 218)
 texture = ExtResource("3_k0juu")
 
 [node name="SpaceMeteors002" type="Sprite2D" parent="."]
@@ -201,12 +215,12 @@ scale = Vector2(0.763033, 0.763033)
 texture = ExtResource("5_i7141")
 
 [node name="SpaceMeteors003" type="Sprite2D" parent="."]
-position = Vector2(-234, -431)
+position = Vector2(476, 68.0001)
 scale = Vector2(0.565909, 0.565909)
 texture = ExtResource("6_4mrxx")
 
 [node name="SpaceMeteors004" type="Sprite2D" parent="."]
-position = Vector2(-197, 297)
+position = Vector2(91, -459)
 scale = Vector2(0.606383, 0.606383)
 texture = ExtResource("7_7r4gi")
 
@@ -274,28 +288,55 @@ position = Vector2(-1464, -98)
 texture = ExtResource("54_66tox")
 
 [node name="ExplorerShip" parent="." instance=ExtResource("41_rga7q")]
-position = Vector2(-858, 72)
-
-[node name="Label" parent="ExplorerShip" index="0"]
-text = "Ship
-    position = (x=-858.00, y=72.00)
-    rotation = -121.25
-    scale = (x=0.75, y=0.75)"
-
-[node name="Sprite" parent="ExplorerShip" index="1"]
-rotation = -2.11621
+position = Vector2(-1036, -62)
+ship_name = "ExplorerShip"
 
 [node name="MotherShip" parent="." instance=ExtResource("42_6oujy")]
-position = Vector2(885, 372)
+position = Vector2(819, 146)
 
 [node name="Label" parent="MotherShip" index="0"]
-text = "Station
-    position = (x=885.00, y=372.00)
-    rotation = 128.18
+text = "MotherShip:
+    position = (x=819.00, y=146.00)
+    rotation = 123.72
     scale = (x=0.75, y=0.75)"
 
-[node name="ShipSprites" parent="MotherShip" index="1"]
-rotation = 2.23711
+[node name="SpriteRoot" parent="MotherShip" index="1"]
+position = Vector2(90.6667, -18.6667)
+rotation = 2.1593
 
-[editable path="ExplorerShip"]
+[node name="PointA" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_qfnet")
+position = Vector2(-720, 98)
+point_color = Color(0, 0, 0.956863, 1)
+
+[node name="PointB" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_k0juu")
+position = Vector2(-298, -140)
+point_name = "B"
+point_color = Color(1, 0, 0, 1)
+
+[node name="PointC" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_0nbtd")
+position = Vector2(175, -89)
+point_name = "C"
+point_color = Color(0, 1, 0, 1)
+
+[node name="PointD" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_37qwj")
+position = Vector2(471, -421)
+point_name = "D"
+point_color = Color(1, 0, 1, 1)
+
+[node name="PointE" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_navra")
+position = Vector2(914, -338)
+point_name = "E"
+point_color = Color(5.77569e-07, 0.389318, 0.37634, 1)
+
+[node name="Point" parent="." instance=ExtResource("2_71j4m")]
+material = SubResource("ShaderMaterial_luhhm")
+position = Vector2(983, -8)
+point_name = "F"
+point_color = Color(0, 0, 0, 1)
+
 [editable path="MotherShip"]
