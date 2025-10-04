@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://scripts/global.gd"
+GP1_TD="*res://GP1_TD5_geometry_trigonometry.gd"
 
 [display]
 
