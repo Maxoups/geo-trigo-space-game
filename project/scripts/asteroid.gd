@@ -3,8 +3,8 @@ class_name Asteroid
 
 
 @onready var anim_time := randf_range(0.9, 1.4)
-@onready var rotation_start := rotation - randf_range(-PI/2, PI/2)
-@onready var rotation_end := rotation_start + randf_range(PI/6, PI/2)
+@onready var rotation_start := rotation + randf_range(PI/10, PI/6)
+@onready var rotation_end := rotation
 
 
 func _ready() -> void:
