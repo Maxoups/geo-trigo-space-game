@@ -2,9 +2,10 @@ extends Sprite2D
 class_name Satellite
 
 
+@export var central_body : Node2D
 @export var orbit_duration := 1.0
 @export var current_time := 0.0
-@onready var orbit_center : Vector2 = get_parent().global_position
+@onready var orbit_center : Vector2 = central_body.global_position
 @onready var starting_position : Vector2 = global_position
 
 

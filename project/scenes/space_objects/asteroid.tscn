@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://pcmkgiuxl6hg"]
+
+[ext_resource type="Texture2D" uid="uid://crm4hvl7kfeba" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_001.png" id="1_b8xwe"]
+[ext_resource type="Script" uid="uid://tjl5grbjlosp" path="res://scripts/asteroid.gd" id="2_555rt"]
+
+[node name="Asteroid" type="Sprite2D"]
+texture = ExtResource("1_b8xwe")
+script = ExtResource("2_555rt")
