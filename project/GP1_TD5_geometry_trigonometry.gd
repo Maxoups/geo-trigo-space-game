@@ -4,11 +4,11 @@ extends Node
 
 
 # Exercice 2
-#
+# Décrire l'orbite d'un stallite
 func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : float,
 									stallite_position : Vector2) -> Array[float]:
 	# Votre code ici
-	# return radius, speed, current_angle
+	# return [radius, speed, current_angle]
 	return [0.0, 0.0, 0.0]
 
 func get_satellite_orbit_position(orbit_center : Vector2, orbit_radius : float,
