@@ -36,19 +36,23 @@ FONCTIONS POUR VOUS AIDER:
 
 
 
-# Exercice 1
+####### Exercice 1 #############################################################
 # Faire naviguer l'ExplorerShip jusqu'à son objectif
 
-# Donner la velocity = (direction * speed) de l'objet (ExplorerShip)
-# Bonus: utiliser current_velocity pour donner une accélération à l'objet. 
-#        Si vous faites le bonus, pensez à retirer "_" de l'argument "_current_velocity".
-func get_velocity(position : Vector2, target_position : Vector2, speed : float, 
-							delta : float, _current_velocity : Vector2) -> Vector2:
+# Interpoler la position de l'objet
+func lerp_object_position(initial_position : Vector2, final_position : Vector2, 
+						duration : float, time : float) -> Vector2:
+	# Votre code ici
 	return Vector2.ZERO
 
+# Interpoler la rotation de l'objet
+func lerp_object_rotation(object_position : Vector2, next_object_position : Vector2) -> float:
+	# Votre code ici
+	return 0.0
 
 
-# Exercice 2
+
+####### Exercice 2 #############################################################
 # Décrire l'orbite d'un stallite
 
 func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : float,
@@ -64,7 +68,7 @@ func get_satellite_orbit_position(orbit_center : Vector2, orbit_radius : float,
 
 
 
-# Exercice 3
+####### Exercice 3 #############################################################
 # Faire tourner le MotherShip vers l'asteroïde obstacle de l'ExplorerShip.
 
 # Recréer la fonction get_angle_to()
@@ -74,7 +78,7 @@ func get_angle_to(object : Vector2, target : Vector2) -> float:
 
 
 
-# Exercice 4
+####### Exercice 4 #############################################################
 # Détruire l'astéroïde obstacle
 
 # Recréer la fonction get_direction_to()
@@ -83,9 +87,15 @@ func get_direction_to() -> Vector2:
 	# Votre code ici
 	return Vector2.ZERO
 
+# Donner la velocity = (direction * speed) du missile
+# Bonus: utiliser current_velocity pour donner une accélération à l'objet. 
+#        Si vous faites le bonus, pensez à retirer "_" de l'argument "_current_velocity".
+func get_velocity(position : Vector2, target_position : Vector2, speed : float, 
+							delta : float, _current_velocity : Vector2) -> Vector2:
+	return Vector2.ZERO
 
 
-# Exercice 5
+####### Exercice 5 #############################################################
 # Générer procéduralement un astéroïde
 
 # Tracer un polygone régulier selon un centre, un rayon et un angle
@@ -94,7 +104,7 @@ func generate_polygon() -> void:
 
 
 
-# Exercice 6 
+####### Exercice 6 #############################################################
 # Détruire un astéroïde
 
 # Fracturer un polygone en un nombre de fragments donnés
@@ -110,5 +120,5 @@ func explode_fragment(impact_point : Vector2, speed : float) -> Vector2:
 
 
 
-# BONUS: Exercice 7
+####### BONUS: Exercice 7 ######################################################
 # Shaders?
