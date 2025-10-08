@@ -98,7 +98,7 @@ func generate_polygone() -> void:
 # Détruire un astéroïde
 
 # Fracturer un polygone en un nombre de fragments donnés
-func shatter_polygon(polygon : Polygon2D, fragments : int) -> Array[Polygon2D]:
+func shatter_polygon(polygon : Polygon2D, nb_fragments : int) -> Array[Polygon2D]:
 	# votre code ici
 	return []
 
