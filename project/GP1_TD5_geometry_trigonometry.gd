@@ -58,13 +58,19 @@ func lerp_object_rotation(object_position : Vector2, next_object_position : Vect
 # Calculer les paramètre de l'orbite d'un satellite (qu'=e l'on suppose être 
 # toujours un cercle parfait).
 func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : float,
-									stallite_position : Vector2) -> Dictionary[String, float]:
-	
-	return  {
-		"radius"        : orbit_center.distance_to(stallite_position),
-		"speed"         : 0.0,
-		"starting_angle" : 0.0
-		}
+									satellite_position : Vector2) -> Dictionary[String, float]:
+	var radius_vec := satellite_position - orbit_center
+	var radius := radius_vec.length()
+	# Starting angle in radians, measured from +X axis
+	var starting_angle := radius_vec.angle()
+	print("starting_angle = " + str(starting_angle))
+	# Optional: orbital speed (radians per second for one full revolution)
+	var speed := TAU / orbit_duration
+	return {
+		"radius": radius,
+		"speed": speed,
+		"starting_angle": starting_angle
+	}
 	# Votre code ici
 	return  {
 		"radius"        : 0.0,
@@ -78,16 +84,24 @@ func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : flo
 # décrite peut donc être une ellipse si x != y !
 func get_satellite_orbit_transform(orbit_center : Vector2, starting_angle : float,
 		orbit_radius : Vector2, orbit_duration : float, current_time : float) -> Transform2D:
-	var current_angle : float = current_time / orbit_duration
+	var current_angle := starting_angle + (current_time / orbit_duration) * TAU
+	# Compute position along the elliptical orbit
 	var current_pos := orbit_center + Vector2(
 		cos(current_angle) * orbit_radius.x,
-		sin(current_angle) * orbit_radius.y,
+		sin(current_angle) * orbit_radius.y
 	)
-	return Transform2D(0.0, current_pos)
+	# Calcul du vecteur de vélocité à l'instant t (dérivé de la position)
+	var vel := Vector2(
+		-sin(current_angle) * orbit_radius.x,
+		 cos(current_angle) * orbit_radius.y
+	)
+	# Calcul de l'orientation du satellite (tangente de la vitesse)
+	var rotation := vel.angle()
+	return Transform2D(rotation, current_pos)
 	# Votre code ici
 	return Transform2D(
-		0.0, 
-		Vector2.ZERO
+		0.0,          # satellite rotation
+		Vector2.ZERO  # stallite position
 	)
 
 
