@@ -5,6 +5,24 @@ extends Node
 """
 FONCTIONS POUR VOUS AIDER:
 	
+	sin(r) 
+		Donne le sinus de l'angle r en radians
+	
+	cos(r)
+		Donne le cosinus de l'angle r en radians
+	
+	acos(c)
+		Donne l'angle r dont cos(r) = c
+	
+	asin(s)
+		Donne l'angle r dont sin(r) = s
+	
+	tan(r)
+		Donne la tangente de l'angle r en radians
+	
+	atan2(y, x)
+		Donne l'angle de tangente x, y
+	
 	sqrt(x) 
 		Donne la racine carrée de x >= 0.0
 	
@@ -89,3 +107,8 @@ func shatter_polygon(polygon : Polygon2D, fragments : int) -> Array[Polygon2D]:
 func explode_fragment(impact_point : Vector2, speed : float) -> Vector2:
 	# votre code ici
 	return Vector2.ZERO
+
+
+
+# BONUS: Exercice 7
+# Shaders?
