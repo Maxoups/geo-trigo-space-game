@@ -152,9 +152,6 @@ shader_parameter/replace = Color(0, 0, 0, 1)
 [node name="World" type="Node2D"]
 script = ExtResource("1_xgqkh")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
-
 [node name="Grid" type="ColorRect" parent="."]
 z_index = -5
 material = SubResource("ShaderMaterial_rwgxs")
