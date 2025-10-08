@@ -43,5 +43,5 @@ func _unhandled_input(event: InputEvent) -> void:
 			zoom = (zoom + Vector2.ONE * zoom_speed).clamp(Vector2(min_zoom, min_zoom), Vector2(max_zoom, max_zoom))
 
 func display_exercise(exercise_title : String, exercise_content : String) -> void:
-	$CanvasLayer/LabelExercise.text = exercise_title
+	$CanvasLayer/LabelExercise.text = " " + exercise_title
 	$CanvasLayer/LabelExercise/ExerciseContent.text = exercise_content
