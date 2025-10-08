@@ -63,7 +63,6 @@ func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : flo
 	var radius := radius_vec.length()
 	# Starting angle in radians, measured from +X axis
 	var starting_angle := radius_vec.angle()
-	print("starting_angle = " + str(starting_angle))
 	# Optional: orbital speed (radians per second for one full revolution)
 	var speed := TAU / orbit_duration
 	return {
