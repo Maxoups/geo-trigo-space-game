@@ -3,7 +3,7 @@ class_name Asteroid
 
 
 @onready var anim_time := randf_range(0.9, 1.4)
-@onready var rotation_start := rotation + randf_range(PI/10, PI/6)
+@onready var rotation_start := rotation + randf_range(PI/15, PI/10)
 @onready var rotation_end := rotation
 
 

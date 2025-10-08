@@ -187,7 +187,7 @@ width = 5.0
 [node name="PlayerCamera" parent="." instance=ExtResource("2_oo54l")]
 
 [node name="Asteroid1" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(-382, 277)
+position = Vector2(-394, 321)
 
 [node name="Asteroid2" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(-1046, -385)
@@ -195,13 +195,13 @@ scale = Vector2(0.2891, 0.2891)
 texture = ExtResource("5_i7141")
 
 [node name="Asteroid6" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(-1171.53, 577.5)
+position = Vector2(-1343, 233)
 rotation = -1.11872
 scale = Vector2(1.08294, 1.08294)
 texture = ExtResource("5_i7141")
 
 [node name="Asteroid9" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(549, 725)
+position = Vector2(549, 787)
 rotation = -2.61437
 scale = Vector2(1.08294, 1.08294)
 texture = ExtResource("5_i7141")
@@ -219,36 +219,36 @@ scale = Vector2(0.924741, 0.924741)
 texture = ExtResource("5_i7141")
 
 [node name="Asteroid3" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(-556, -608)
+position = Vector2(-601, -608)
 scale = Vector2(0.817536, 0.817536)
 texture = ExtResource("5_i7141")
 
 [node name="Asteroid4" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(284, 177)
+position = Vector2(284, 207)
 scale = Vector2(0.589611, 0.589611)
 texture = ExtResource("6_4mrxx")
 
 [node name="Asteroid5" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(25, -543)
+position = Vector2(60, -655)
 scale = Vector2(0.6636, 0.6636)
 texture = ExtResource("7_7r4gi")
 
 [node name="Satellite" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
-position = Vector2(228, -309)
+position = Vector2(263, -421)
 scale = Vector2(0.288462, 0.288462)
 central_body = NodePath("../Asteroid5")
 orbit_duration = 7.0
 initial_delay = 1.5
 
 [node name="Satellite2" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
-position = Vector2(-703, -351)
+position = Vector2(-748, -351)
 scale = Vector2(0.426282, 0.426282)
 texture = ExtResource("33_1jxku")
 central_body = NodePath("../Asteroid3")
 orbit_duration = 12.0
 
 [node name="Satellite5" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
-position = Vector2(293, 406)
+position = Vector2(293, 436)
 scale = Vector2(0.32, 0.32)
 texture = ExtResource("33_1jxku")
 central_body = NodePath("../Asteroid4")
@@ -257,7 +257,7 @@ orbit_radius = Vector2(370, 240)
 initial_delay = 2.0
 
 [node name="Satellite3" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
-position = Vector2(-791, 268)
+position = Vector2(-803, 312)
 scale = Vector2(0.322607, 0.322607)
 texture = ExtResource("11_xgqkh")
 central_body = NodePath("../Asteroid1")
@@ -267,7 +267,7 @@ orbit_speed = 10.0
 initial_delay = 0.5
 
 [node name="Satellite4" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
-position = Vector2(-172, -82)
+position = Vector2(-184, -38)
 scale = Vector2(0.358763, 0.358763)
 texture = ExtResource("32_x28ej")
 central_body = NodePath("../Asteroid1")
