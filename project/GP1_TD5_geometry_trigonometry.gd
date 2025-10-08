@@ -36,55 +36,58 @@ FONCTIONS POUR VOUS AIDER:
 
 
 
-####### Exercice 1 #############################################################
+####### EXERCICE 1 #############################################################
 # Faire naviguer l'ExplorerShip jusqu'à son objectif
 
 # Interpoler la position de l'objet
 func lerp_object_position(initial_position : Vector2, final_position : Vector2, 
 						duration : float, time : float) -> Vector2:
-	# Votre code ici
+	print_debug("À compléter")
 	return Vector2.ZERO
 
 # Interpoler la rotation de l'objet
 func lerp_object_rotation(object_position : Vector2, next_object_position : Vector2) -> float:
-	# Votre code ici
+	print_debug("À compléter")
 	return 0.0
 
 
 
-####### Exercice 2 #############################################################
+####### EXERCICE 2 #############################################################
 # Décrire l'orbite d'un stallite
 
 func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : float,
-									stallite_position : Vector2) -> Array[float]:
-	# Votre code ici
-	# return [radius, speed, current_angle]
-	return [0.0, 0.0, 0.0]
+									stallite_position : Vector2) -> Dictionary[String, float]:
+	print_debug("À compléter")
+	return  {
+		"radius"        : 0.0,
+		"speed"         : 0.0,
+		"current_angle" : 0.0
+		}
 
-func get_satellite_orbit_position(orbit_center : Vector2, orbit_radius : float,
+func get_satellite_orbit_position(orbit_center : Vector2, orbit_radius : Vector2,
 								orbit_speed : float, current_angle : float) -> Vector2:
-	# votre code ici
+	print_debug("À compléter")
 	return Vector2.ZERO
 
 
 
-####### Exercice 3 #############################################################
+####### EXERCICE 3 #############################################################
 # Faire tourner le MotherShip vers l'asteroïde obstacle de l'ExplorerShip.
 
 # Recréer la fonction get_angle_to()
 func get_angle_to(object : Vector2, target : Vector2) -> float:
-	# Votre code ici
+	print_debug("À compléter")
 	return 0.0
 
 
 
-####### Exercice 4 #############################################################
+####### EXERCICE 4 #############################################################
 # Détruire l'astéroïde obstacle
 
 # Recréer la fonction get_direction_to()
 # Pensez à bien retourner un vecteur NORMALISÉ!
 func get_direction_to() -> Vector2:
-	# Votre code ici
+	print_debug("À compléter")
 	return Vector2.ZERO
 
 # Donner la velocity = (direction * speed) du missile
@@ -95,8 +98,8 @@ func get_velocity(position : Vector2, target_position : Vector2, speed : float,
 	return Vector2.ZERO
 
 
-####### Exercice 5 #############################################################
-# Générer procéduralement un astéroïde
+####### EXERCICE 5 #############################################################
+# Générer procéduralement les astéroïdes
 
 # Tracer un polygone régulier selon un centre, un rayon et un angle
 func generate_polygon() -> void:
@@ -104,21 +107,21 @@ func generate_polygon() -> void:
 
 
 
-####### Exercice 6 #############################################################
+####### EXERCICE 6 #############################################################
 # Détruire un astéroïde
 
 # Fracturer un polygone en un nombre de fragments donnés
 func shatter_polygon(polygon : Polygon2D, nb_fragments : int) -> Array[Polygon2D]:
-	# votre code ici
+	print_debug("À compléter")
 	return []
 
 # Exploser les fragments d'un polygone selon un point d'impact impact_point et 
 # une vitesse speed
 func explode_fragment(impact_point : Vector2, speed : float) -> Vector2:
-	# votre code ici
+	print_debug("À compléter")
 	return Vector2.ZERO
 
 
 
-####### BONUS: Exercice 7 ######################################################
+####### BONUS: EXERCICE 7 ######################################################
 # Shaders?

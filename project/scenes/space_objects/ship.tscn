@@ -16,10 +16,10 @@ offset_left = 105.333
 offset_top = -330.667
 offset_right = 859.333
 offset_bottom = -13.6667
-text = "Ship
-      position=(x=0.00, y=0.00)
-      rotation=0.00
-      scale=(0.75, 0.75)"
+text = "Ship:
+    position = (x=0.00, y=0.00)
+    rotation = 0.00
+    scale = (x=0.75, y=0.75)"
 label_settings = ExtResource("2_4d3q3")
 
 [node name="ToggleableObject" type="Node" parent="Label"]
