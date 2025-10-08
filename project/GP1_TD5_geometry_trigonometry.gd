@@ -2,6 +2,20 @@ extends Node
 
 
 
+"""
+FONCTIONS POUR VOUS AIDER:
+	
+	sqrt(x) 
+		Donne la racine carrée de x >= 0.0
+	
+	pow(x, i)
+		Élève x à la puissance i
+	
+	Vector2(a, b).normalized() 
+		Donne un vecteur de norme 1 colinéaire au vecteur Vector2(a, b)
+
+"""
+
 
 # Exercice 2
 # Décrire l'orbite d'un stallite
@@ -25,7 +39,7 @@ func get_angle_to(object : Vector2, target : Vector2) -> float:
 
 
 # Exercice ???
-# 
+# Donner la velocity = (direction * speed) du missile
 # Bonus: utiliser current_velocity pour donner une accélération au missile.
 func get_missile_velocity(position : Vector2, target_position : Vector2, speed : float, 
 							delta : float, current_velocity := Vector2.ZERO) -> Vector2:
