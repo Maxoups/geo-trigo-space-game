@@ -3,6 +3,10 @@ extends Node
 
 
 """
+Appuyer sur F5 pour lancer un test.
+Dans le test, appuyer sur Tab pour afficher/enlever les données de la grille.
+Les exercices se joueront automatiquement.
+
 FONCTIONS POUR VOUS AIDER:
 	
 	sin(r) 
