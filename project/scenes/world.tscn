@@ -200,10 +200,16 @@ rotation = -1.11872
 scale = Vector2(1.08294, 1.08294)
 texture = ExtResource("5_i7141")
 
+[node name="Asteroid9" parent="." instance=ExtResource("5_dss4m")]
+position = Vector2(549, 725)
+rotation = -2.61437
+scale = Vector2(1.08294, 1.08294)
+texture = ExtResource("5_i7141")
+
 [node name="Asteroid7" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(933, 876)
+position = Vector2(618, -339)
 rotation = 0.795373
-scale = Vector2(0.760009, 0.760009)
+scale = Vector2(0.85, 0.85)
 texture = ExtResource("5_i7141")
 
 [node name="Asteroid8" parent="." instance=ExtResource("5_dss4m")]
@@ -228,7 +234,7 @@ scale = Vector2(0.6636, 0.6636)
 texture = ExtResource("7_7r4gi")
 
 [node name="Satellite" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
-position = Vector2(372, -309)
+position = Vector2(228, -309)
 scale = Vector2(0.288462, 0.288462)
 central_body = NodePath("../Asteroid5")
 
@@ -248,7 +254,7 @@ orbit_radius = Vector2(100, 150)
 orbit_speed = 10.0
 
 [node name="Satellite4" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
-position = Vector2(265, 430)
+position = Vector2(-282, 688)
 rotation = -0.559566
 scale = Vector2(0.358763, 0.358763)
 texture = ExtResource("32_x28ej")
