@@ -221,12 +221,12 @@ scale = Vector2(0.817536, 0.817536)
 texture = ExtResource("5_i7141")
 
 [node name="Asteroid4" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(570.286, -74.5995)
+position = Vector2(334, 191)
 scale = Vector2(0.589611, 0.589611)
 texture = ExtResource("6_4mrxx")
 
 [node name="Asteroid5" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(99.6486, -459.907)
+position = Vector2(25, -543)
 scale = Vector2(0.6636, 0.6636)
 texture = ExtResource("7_7r4gi")
 
