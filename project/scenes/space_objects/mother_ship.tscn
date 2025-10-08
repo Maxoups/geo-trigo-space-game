@@ -11,36 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://cmpdbttt2ybxb" path="res://resources/SpaceShooterSprites/Parts/spaceParts_043.png" id="8_j88c7"]
 [ext_resource type="PackedScene" uid="uid://b0jyyn03dfh8" path="res://scenes/space_objects/thruster_effect.tscn" id="10_683g5"]
 
-[sub_resource type="Animation" id="Animation_683g5"]
-resource_name = "cannon_idle"
-length = 3.0
-loop_mode = 1
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ShipCannonCockpit:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(0.5, 0.5),
-"update": 0,
-"values": [Vector2(0, 47), Vector2(0, 47)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ShipCannonCockpit:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(0.5, 0.5),
-"update": 0,
-"values": [-2.96706, -3.31613]
-}
-
 [sub_resource type="Animation" id="Animation_x7olw"]
 length = 0.001
 tracks/0/type = "value"
@@ -95,6 +65,36 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(0.5),
 "update": 0,
 "values": [-3.14159]
+}
+
+[sub_resource type="Animation" id="Animation_683g5"]
+resource_name = "cannon_idle"
+length = 3.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShipCannonCockpit:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.5, 0.5),
+"update": 0,
+"values": [Vector2(0, 47), Vector2(0, 47)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShipCannonCockpit:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.5, 0.5),
+"update": 0,
+"values": [-2.96706, -3.31613]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2bu30"]
@@ -318,7 +318,6 @@ texture = ExtResource("2_yn7v5")
 [node name="FiringMarker2D" type="Marker2D" parent="SpriteRoot/ShipSprites/ShipHull/ShipHead" index="0"]
 position = Vector2(-0.00453401, 111.516)
 rotation = 3.14159
-scale = Vector2(1, 1)
 gizmo_extents = 25.0
 
 [node name="ShipCannonCockpit" type="Sprite2D" parent="SpriteRoot/ShipSprites/ShipHull/ShipHead" index="1"]

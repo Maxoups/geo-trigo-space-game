@@ -145,10 +145,6 @@ offset_left = 33.0
 offset_top = -315.0
 offset_right = 787.0
 offset_bottom = 2.0
-text = "Ship:
-    position = (x=0.00, y=0.00)
-    rotation = 0.00
-    scale = (x=0.75, y=0.75)"
 
 [node name="Sprite" type="Sprite2D" parent="SpriteRoot" index="0"]
 position = Vector2(0, 5)

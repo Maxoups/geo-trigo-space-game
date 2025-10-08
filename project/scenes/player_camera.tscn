@@ -33,7 +33,6 @@ anchor_right = 0.261285
 anchor_bottom = 0.195988
 grow_horizontal = 2
 grow_vertical = 2
-text = "Exercice 1:"
 label_settings = SubResource("LabelSettings_eanys")
 autowrap_mode = 2
 metadata/_edit_use_anchors_ = true
@@ -48,7 +47,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.509804)
 
-[node name="LabelExercise" type="Label" parent="CanvasLayer/LabelExercise"]
+[node name="ExerciseContent" type="Label" parent="CanvasLayer/LabelExercise"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,6 +56,5 @@ offset_left = 17.0
 offset_top = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Donner la vélocité du vaisseau pour aller vers un point."
 label_settings = SubResource("LabelSettings_tparg")
 autowrap_mode = 2
