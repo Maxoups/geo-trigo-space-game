@@ -33,7 +33,6 @@ var exercises : Array[ExerciseDisplay] = [
 
 
 func _ready() -> void:
-	generate_asteroids
 	Global.world = self
 	$Grid/AnimationPlayer.play("grid_idle")
 	play_exercise()
