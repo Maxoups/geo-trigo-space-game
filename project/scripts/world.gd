@@ -31,7 +31,6 @@ var exercises : Array[ExerciseDisplay] = [
 ]
 
 
-
 func _ready() -> void:
 	Global.world = self
 	$Grid/AnimationPlayer.play("grid_idle")
