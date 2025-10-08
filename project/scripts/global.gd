@@ -1,5 +1,5 @@
 extends Node
 
 
-var world : Node2D
+var world : World
 var player_camera : PlayerCamera
