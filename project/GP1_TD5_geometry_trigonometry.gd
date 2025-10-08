@@ -55,19 +55,40 @@ func lerp_object_rotation(object_position : Vector2, next_object_position : Vect
 ####### EXERCICE 2 #############################################################
 # Décrire l'orbite d'un stallite
 
+# Calculer les paramètre de l'orbite d'un satellite (qu'=e l'on suppose être 
+# toujours un cercle parfait).
 func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : float,
 									stallite_position : Vector2) -> Dictionary[String, float]:
+	
+	return  {
+		"radius"        : orbit_center.distance_to(stallite_position),
+		"speed"         : 0.0,
+		"starting_angle" : 0.0
+		}
 	# Votre code ici
 	return  {
 		"radius"        : 0.0,
 		"speed"         : 0.0,
-		"current_angle" : 0.0
+		"starting_angle" : 0.0
 		}
 
-func get_satellite_orbit_position(orbit_center : Vector2, orbit_radius : Vector2,
-								orbit_speed : float, current_angle : float) -> Vector2:
+# Calculer la position et la rotation d'un satellite sur son orbite selon un 
+# angle donné.
+# Attention au rayon de l'orbite : c'est un vecteur (x, y). La trajectoire
+# décrite peut donc être une ellipse si x != y !
+func get_satellite_orbit_transform(orbit_center : Vector2, starting_angle : float,
+		orbit_radius : Vector2, orbit_duration : float, current_time : float) -> Transform2D:
+	var current_angle : float = current_time / orbit_duration
+	var current_pos := orbit_center + Vector2(
+		cos(current_angle) * orbit_radius.x,
+		sin(current_angle) * orbit_radius.y,
+	)
+	return Transform2D(0.0, current_pos)
 	# Votre code ici
-	return Vector2.ZERO
+	return Transform2D(
+		0.0, 
+		Vector2.ZERO
+	)
 
 
 

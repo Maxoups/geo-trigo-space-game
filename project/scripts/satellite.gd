@@ -16,20 +16,23 @@ var has_orbit_started := false
 
 
 func _ready() -> void:
+	await get_tree().process_frame
 	Global.world.start_satellite_orbits.connect(start_satellite_orbits)
 
 func start_satellite_orbits() -> void:
 	if orbit_radius == Vector2.ZERO or orbit_speed == 0.0:
 		var orbit_parameters := GP1_TD.get_satellite_orbit_parameters(
 								orbit_center, orbit_duration, starting_position)
-		orbit_radius = Vector2.ONE * orbit_parameters["current_angle"]
+		orbit_radius = Vector2.ONE * orbit_parameters["radius"]
 		orbit_speed = orbit_parameters["speed"]
-		starting_angle = orbit_parameters["current_angle"]
+		starting_angle = orbit_parameters["starting_angle"]
 	has_orbit_started = true
 
 func _process(delta: float) -> void:
 	if not has_orbit_started:
 		return
 	current_time += delta
-	GP1_TD.get_satellite_orbit_position(orbit_center, orbit_radius, orbit_speed, current_time)
-	#rotation = starting_angle + delta 
+	var t : Transform2D = GP1_TD.get_satellite_orbit_transform(orbit_center, starting_angle, 
+									orbit_radius, orbit_duration, current_time)
+	rotation = t.get_rotation()
+	position = t.get_origin()
