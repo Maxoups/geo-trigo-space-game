@@ -11,4 +11,4 @@ class_name Satellite
 
 func _process(delta: float) -> void:
 	current_time += delta
-	GP1_TD.get_satellite_position(orbit_center, orbit_duration, starting_position, current_time)
+	#GP1_TD.get_satellite_position(orbit_center, orbit_duration, starting_position, current_time)
