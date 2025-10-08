@@ -89,7 +89,7 @@ func get_direction_to() -> Vector2:
 # Générer procéduralement un astéroïde
 
 # Tracer un polygone régulier selon un centre, un rayon et un angle
-func generate_polygone() -> void:
+func generate_polygon() -> void:
 	pass
 
 
