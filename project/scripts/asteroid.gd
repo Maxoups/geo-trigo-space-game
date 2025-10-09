@@ -24,6 +24,7 @@ func explode() -> void:
 		return
 	visible = false
 	$StaticBody2D.queue_free()
+	var fragments := GP1_TD.shatter_polygon($Polygon2D.polygon, randi_range(8, 14))
 	
 
 func generate_asteroid_polygon() -> void:

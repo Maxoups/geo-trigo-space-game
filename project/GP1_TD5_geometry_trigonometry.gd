@@ -214,11 +214,9 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 		push_error("Invalid radius values: external must be > internal > 0")
 		return []
 	
-	
 	var points: PackedVector2Array = PackedVector2Array()
 	var angle_step := (TAU) / float(number_of_sides) # TAU = PI * 2
 	var start_angle := -PI * 0.5  # pour commencer vers le haut
-	
 	for i in range(number_of_sides):
 		var a := start_angle + angle_step * i
 		a += randf_range(-angle_step * 0.1, angle_step * 0.1) # irrégularité sur l'angle
@@ -226,7 +224,6 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 		var r := randf_range(internal_radius, external_radius)
 		var p := Vector2(cos(a), sin(a)) * r
 		points.append(p)
-
 	return points
 	# Votre code ici
 	return []
