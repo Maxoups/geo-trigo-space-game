@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 	if global_position.distance_squared_to(final_position) <= SNAP_LIMIT:
 		set_current_point(current_point + 1)
 
-func _on_ship_hitbox_area_body_entered(body: Node2D) -> void:
+func _on_ship_hitbox_area_body_entered(_body: Node2D) -> void:
 	ship_death()
 
 func ship_death() -> void:
