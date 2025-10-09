@@ -56,7 +56,8 @@ func lerp_object_position(initial_position : Vector2, final_position : Vector2,
 	# Votre code ici
 	return Vector2.ZERO
 
-# Interpoler la rotation de l'objet
+# Interpoler la rotation de l'objet (donner l'angle entre l'objet et sa position
+# suivante)
 func lerp_object_rotation(object_position : Vector2, next_object_position : Vector2) -> float:
 	return object_position.angle_to(next_object_position)
 	# Votre code ici
@@ -122,6 +123,7 @@ func get_satellite_orbit_transform(orbit_center : Vector2, starting_angle : floa
 
 # Recréer la fonction get_angle_to()
 func get_angle_to(object : Vector2, target : Vector2) -> float:
+	print_debug("RECREER LA FONCTION GET_ANGLE_TO")
 	# Votre code ici
 	return 0.0
 
@@ -138,7 +140,7 @@ func get_direction_to() -> Vector2:
 
 # Donner la velocity = (direction * speed) du missile
 # Bonus: utiliser current_velocity pour donner une accélération à l'objet. 
-#        Si vous faites le bonus, pensez à retirer "_" de l'argument "_current_velocity".
+#      Si vous faites le bonus, pensez à retirer "_" de l'argument "_current_velocity".
 func get_velocity(position : Vector2, target_position : Vector2, speed : float, 
 							delta : float, _current_velocity : Vector2) -> Vector2:
 	return Vector2.ZERO
@@ -147,10 +149,55 @@ func get_velocity(position : Vector2, target_position : Vector2, speed : float,
 ####### EXERCICE 5 #############################################################
 # Générer procéduralement les astéroïdes
 
-# Tracer un polygone régulier selon un centre, un rayon et un angle
-func generate_polygon() -> void:
-	pass
+# Tracer un polygone régulier selon un rayon et un nombre de côtés
+func generate_regular_polygon(radius : float, number_of_sides : int) -> PackedVector2Array:
+	if number_of_sides < 3:
+		push_error("number_of_sides must be at least 3")
+		return []
+	if radius <= 0.0:
+		push_error("radius must be > 0")
+		return []
+	
+	var points: PackedVector2Array = PackedVector2Array()
+	var angle_step := (TAU) / float(number_of_sides) # TAU = PI * 2
+	# Optionnel : démarrer en haut (−PI/2) pour que le premier sommet soit vers le haut
+	var start_angle := -PI * 0.5
+	for i in range(number_of_sides):
+		var a := start_angle + angle_step * i
+		var p := Vector2(cos(a), sin(a)) * radius
+		points.append(p)
+	return points
 
+	# Votre code ici
+	return []
+
+# Tracer un polygone quelconque selon un nombre de côtés, un rayon exterieur et un
+# rayon intérieur. Tous les points du polygons doivent être entre les deux rayons.
+func generate_random_polygon(external_radius : float, internal_radius : float,
+							number_of_sides : int) -> PackedVector2Array:
+	if number_of_sides < 3:
+		push_error("number_of_sides must be at least 3")
+		return []
+	if internal_radius <= 0.0 or external_radius <= internal_radius:
+		push_error("Invalid radius values: external must be > internal > 0")
+		return []
+	
+	
+	var points: PackedVector2Array = PackedVector2Array()
+	var angle_step := (TAU) / float(number_of_sides) # TAU = PI * 2
+	var start_angle := -PI * 0.5  # pour commencer vers le haut
+	
+	for i in range(number_of_sides):
+		var a := start_angle + angle_step * i
+		a += randf_range(-angle_step * 0.2, angle_step * 0.2) # irrégularité sur l'angle
+		# Rayon aléatoire entre les deux bornes
+		var r := randf_range(internal_radius, external_radius)
+		var p := Vector2(cos(a), sin(a)) * r
+		points.append(p)
+
+	return points
+	# Votre code ici
+	return []
 
 
 ####### EXERCICE 6 #############################################################
