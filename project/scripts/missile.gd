@@ -4,7 +4,7 @@ class_name Missile
 
 const MISSILE_RES := preload("res://scenes/space_objects/missile.tscn")
 
-@export var explosion_force := 4000.0
+@export var explosion_force := 2500.0
 @export var speed := 800.0
 @export var target_position : Vector2
 @export var velocity : Vector2

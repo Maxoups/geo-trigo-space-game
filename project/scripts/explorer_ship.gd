@@ -38,6 +38,8 @@ func set_current_point(new_point : int) -> void:
 	final_position = path_points[current_point].global_position
 
 func _process(delta: float) -> void:
+	if not alive:
+		return
 	super._process(delta)
 	if not is_moving:
 		return

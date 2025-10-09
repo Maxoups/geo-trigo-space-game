@@ -282,7 +282,7 @@ func shatter_polygon(polygon : PackedVector2Array,
 	return []
 
 # Calcul du centre et de l'aire d'un polygone
-func _centroid_and_area(polygon: PackedVector2Array) -> Dictionary:
+func centroid_and_area(polygon: PackedVector2Array) -> Dictionary:
 	var n := polygon.size()
 	var cx := 0.0
 	var cy := 0.0
@@ -311,12 +311,12 @@ func _centroid_and_area(polygon: PackedVector2Array) -> Dictionary:
 	}
 
 
-# Calcul de la vélocité d'un fragment explosé
+# Calcul de la vélocité d'un fragment explosé (utiliser centroid_and_area)
 func explode_fragment(asteroid_polygon : PackedVector2Array, asteroid_position : Vector2,
 				fragment_polygon : PackedVector2Array, impact_point : Vector2, 
 				force : float) -> Vector2:
 	
-	var fragment_info := _centroid_and_area(fragment_polygon)
+	var fragment_info := centroid_and_area(fragment_polygon)
 	var fragment_centroid : Vector2 = fragment_info["centroid"]
 	var fragment_area : float = fragment_info["area"]
 	

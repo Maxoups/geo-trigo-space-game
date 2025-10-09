@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bt4cdoblfhlft"]
+[gd_scene load_steps=30 format=3 uid="uid://bt4cdoblfhlft"]
 
 [ext_resource type="Shader" uid="uid://bdw0786jigflv" path="res://resources/shaders/grid_background.gdshader" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://biqixxvye3fr2" path="res://scripts/world.gd" id="1_xgqkh"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c80fq8cdd4mk7" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_004.png" id="7_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://cy7d5b1ckl2cj" path="res://scenes/space_objects/satellite.tscn" id="9_pm21f"]
 [ext_resource type="Texture2D" uid="uid://5sbo5wnny7lb" path="res://resources/SpaceShooterSprites/Station/spaceStation_019.png" id="11_xgqkh"]
+[ext_resource type="PackedScene" uid="uid://dtccjdnuifv6u" path="res://scenes/space_objects/ship_path_trace.tscn" id="17_7t5mc"]
 [ext_resource type="Script" uid="uid://basqjwhkm26mf" path="res://scripts/toggleable_object.gd" id="26_munwf"]
 [ext_resource type="Shader" uid="uid://dqf5bx8aala3w" path="res://resources/shaders/color_swap.gdshader" id="27_ts3gi"]
 [ext_resource type="Texture2D" uid="uid://c1gkupdtxvd5n" path="res://resources/SpaceShooterSprites/Building/spaceBuilding_014.png" id="32_x28ej"]
@@ -67,7 +68,7 @@ _data = {
 &"grid_idle": SubResource("Animation_ctatt")
 }
 
-[sub_resource type="Shader" id="Shader_dss4m"]
+[sub_resource type="Shader" id="Shader_7t5mc"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -92,11 +93,11 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qfnet"]
 resource_local_to_scene = true
-shader = SubResource("Shader_dss4m")
+shader = SubResource("Shader_7t5mc")
 shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
 shader_parameter/replace = Color(0, 0, 0.956863, 1)
 
-[sub_resource type="Shader" id="Shader_7t5mc"]
+[sub_resource type="Shader" id="Shader_lakw3"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -121,7 +122,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k0juu"]
 resource_local_to_scene = true
-shader = SubResource("Shader_7t5mc")
+shader = SubResource("Shader_lakw3")
 shader_parameter/original = Color(0.988235, 0.360784, 0.396078, 1)
 shader_parameter/replace = Color(1, 0, 0, 1)
 
@@ -185,6 +186,7 @@ points = PackedVector2Array(0, -5000, 0, 5000)
 width = 5.0
 
 [node name="PlayerCamera" parent="." instance=ExtResource("2_oo54l")]
+position = Vector2(0, -107)
 
 [node name="Asteroid1" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(-394, 321)
@@ -292,12 +294,16 @@ path_points = [NodePath("../PointA"), NodePath("../PointB"), NodePath("../PointC
 ship_name = "ExplorerShip"
 
 [node name="MotherShip" parent="." node_paths=PackedStringArray("target") instance=ExtResource("42_6oujy")]
-position = Vector2(857, 406)
+position = Vector2(1022, 457)
 target = NodePath("../Asteroid7Target")
 
 [node name="Label" parent="MotherShip" index="0"]
+offset_left = 240.0
+offset_top = -672.0
+offset_right = 994.0
+offset_bottom = -355.0
 text = "MotherShip:
-    position = (x=857.00, y=406.00)
+    position = (x=1022.00, y=457.00)
     rotation = 64.08
     scale = (x=0.75, y=0.75)"
 
@@ -336,8 +342,12 @@ point_color = Color(0, 0.623529, 0.623529, 1)
 
 [node name="PointF" parent="." instance=ExtResource("2_71j4m")]
 material = SubResource("ShaderMaterial_luhhm")
-position = Vector2(802, 156)
+position = Vector2(834, 362)
 point_name = "F"
 point_color = Color(0, 0, 0, 1)
+
+[node name="ShipPathTrace" parent="." node_paths=PackedStringArray("monitored_ship") instance=ExtResource("17_7t5mc")]
+points = PackedVector2Array(0, 0, 0, 0)
+monitored_ship = NodePath("../ExplorerShip")
 
 [editable path="MotherShip"]

@@ -12,7 +12,7 @@ font_size = 24
 font_size = 18
 
 [node name="PlayerCamera" type="Camera2D"]
-zoom = Vector2(0.5, 0.5)
+zoom = Vector2(0.35, 0.35)
 script = ExtResource("1_7pa0d")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

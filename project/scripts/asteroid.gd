@@ -24,7 +24,7 @@ func explode(impact_point : Vector2, explosion_force : float) -> void:
 	if len($Polygon2D.polygon) == 0:
 		print_debug("Polygon has not been drawn ; can't explode asteroid!")
 		return
-	modulate = Color(1, 1, 1, 0.5)
+	visible = false
 	if is_instance_valid(idle_anim_tween):
 		idle_anim_tween.kill()
 	$StaticBody2D.queue_free()
@@ -32,8 +32,10 @@ func explode(impact_point : Vector2, explosion_force : float) -> void:
 	for fragment : PackedVector2Array in fragments:
 		AsteroidFragment.spawn_asteroid_fragment(
 			global_position, 
-			0.0, fragment, GP1_TD.explode_fragment($Polygon2D.polygon, global_position, fragment, 
-													impact_point, explosion_force)
+			global_rotation, 
+			fragment, 
+			GP1_TD.explode_fragment($Polygon2D.polygon, global_position, fragment, 
+									impact_point, explosion_force)
 		)
 
 func generate_asteroid_polygon() -> void:
