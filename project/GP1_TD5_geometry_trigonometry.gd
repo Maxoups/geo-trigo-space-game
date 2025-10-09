@@ -35,6 +35,9 @@ FONCTIONS POUR VOUS AIDER:
 	
 	Vector2(a, b).normalized() 
 		Donne un vecteur de norme 1 colinéaire au vecteur Vector2(a, b)
+	
+	Vector2(a, b).angle_to(Vector2(c, d))
+		Retourne l'angle entre le Vecteur(A, B) et le Vecteur(C, D)
 
 """
 
@@ -55,6 +58,7 @@ func lerp_object_position(initial_position : Vector2, final_position : Vector2,
 
 # Interpoler la rotation de l'objet
 func lerp_object_rotation(object_position : Vector2, next_object_position : Vector2) -> float:
+	return object_position.angle_to(next_object_position)
 	# Votre code ici
 	return 0.0
 
