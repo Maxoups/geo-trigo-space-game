@@ -57,10 +57,20 @@ func lerp_object_position(initial_position : Vector2, final_position : Vector2,
 	return Vector2.ZERO
 
 
-# Interpoler la rotation de l'objet (donner l'angle entre l'objet et sa position
-# suivante)
-func lerp_object_rotation(object_position : Vector2, next_object_position : Vector2) -> float:
-	return object_position.angle_to(next_object_position)
+# Interpoler la rotation de l'objet pour qu'il garde une orientation correcte
+# selon sa cible.
+func lerp_object_rotation(object_rotation : float, object_position : Vector2,
+							target_position : Vector2) -> float:
+	# Si l'objet n'a pas de direction (ex: vitesse nulle), on ne change pas la rotation
+	var dir := (target_position - object_position).normalized()
+	if dir.length() == 0.0:
+		return object_rotation
+	var target_angle := atan2(dir.y, dir.x)
+	# Interpolation fluide vers l'angle cible (rotation progressive)
+	var rotate_speed := 3.0  # facteur de lissage (plus grand = plus rapide)
+	var new_rotation := lerp_angle(object_rotation, target_angle, get_process_delta_time() * rotate_speed)
+	return new_rotation
+	
 	# Votre code ici
 	return 0.0
 
@@ -157,11 +167,10 @@ func get_velocity(position : Vector2, target_position : Vector2, speed : float,
 	# direction normalisée vers la cible
 	var direction := get_direction_to(position, target_position)
 	# vitesse cible instantanée
-	var desired_velocity := direction * speed
+	var desired_velocity := direction * speed * delta
 	# BONUS : interpolation lissée pour simuler accélération / inertie
-	# (plus delta est petit, plus la transition est douce)
-	var acceleration := 10.0  # facteur d’inertie (ajustable)
-	var new_velocity := current_velocity.lerp(desired_velocity, delta * acceleration)
+	var acceleration := 0.1  # facteur d’inertie (ajustable)
+	var new_velocity := current_velocity.lerp(desired_velocity, acceleration)
 	return new_velocity
 	# Votre code ici
 	return Vector2.ZERO

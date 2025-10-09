@@ -44,7 +44,8 @@ func rotate_ship() -> void:
 
 func fire_cannon() -> void:
 	anim_cannon.play("cannon_fire")
-	Missile.spawn_missile(firing_marker.global_position, firing_marker.global_rotation)
+	Missile.spawn_missile(firing_marker.global_position, firing_marker.global_rotation,
+								target.global_position)
 	await anim_cannon.animation_finished
 	anim_cannon.play("cannon_idle")
 

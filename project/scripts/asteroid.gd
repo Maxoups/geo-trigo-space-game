@@ -2,7 +2,7 @@ extends Sprite2D
 class_name Asteroid
 
 
-const ASTEROID_RADIUS := [225.0, 175.0, 125.0, 70.0]
+const ASTEROID_RADIUS := [240.0, 175.0, 125.0, 70.0]
 
 @export var polygon_appear_delay := 0.0
 @export var is_regular := true
