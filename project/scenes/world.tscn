@@ -188,14 +188,17 @@ width = 5.0
 
 [node name="Asteroid1" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(-394, 321)
+polygon_appear_delay = 0.75
+is_regular = false
 
 [node name="Asteroid2" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(-1046, -385)
 scale = Vector2(0.2891, 0.2891)
 texture = ExtResource("5_i7141")
+polygon_appear_delay = 0.25
 
 [node name="Asteroid6" parent="." instance=ExtResource("5_dss4m")]
-position = Vector2(-1343, 233)
+position = Vector2(-1252, 453)
 rotation = -1.11872
 scale = Vector2(1.08294, 1.08294)
 texture = ExtResource("5_i7141")
@@ -205,33 +208,42 @@ position = Vector2(549, 787)
 rotation = -2.61437
 scale = Vector2(1.08294, 1.08294)
 texture = ExtResource("5_i7141")
+polygon_appear_delay = 1.5
 
 [node name="Asteroid7" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(618, -339)
 rotation = 0.795373
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("5_i7141")
+polygon_appear_delay = 1.5
+is_regular = false
 
 [node name="Asteroid8" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(1063, -737)
 rotation = -0.212242
 scale = Vector2(0.924741, 0.924741)
 texture = ExtResource("5_i7141")
+polygon_appear_delay = 1.75
+is_regular = false
 
 [node name="Asteroid3" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(-601, -608)
 scale = Vector2(0.817536, 0.817536)
 texture = ExtResource("5_i7141")
+polygon_appear_delay = 0.5
 
 [node name="Asteroid4" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(284, 207)
 scale = Vector2(0.589611, 0.589611)
 texture = ExtResource("6_4mrxx")
+polygon_appear_delay = 1.25
+is_regular = false
 
 [node name="Asteroid5" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(60, -655)
 scale = Vector2(0.6636, 0.6636)
 texture = ExtResource("7_7r4gi")
+polygon_appear_delay = 1.0
 
 [node name="Satellite" parent="." node_paths=PackedStringArray("central_body") instance=ExtResource("9_pm21f")]
 position = Vector2(263, -421)
@@ -276,7 +288,6 @@ initial_delay = 0.0
 
 [node name="ExplorerShip" parent="." node_paths=PackedStringArray("path_points") instance=ExtResource("41_rga7q")]
 position = Vector2(-1036, -62)
-speed = 300.0
 path_points = [NodePath("../PointA"), NodePath("../PointB"), NodePath("../PointC"), NodePath("../PointD"), NodePath("../PointE"), NodePath("../PointF")]
 ship_name = "ExplorerShip"
 
