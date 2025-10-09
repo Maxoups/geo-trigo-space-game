@@ -18,6 +18,14 @@ func _ready() -> void:
 	await get_tree().process_frame
 	Global.world.generate_asteroids.connect(generate_asteroid_polygon)
 
+func explode() -> void:
+	if len($Polygon2D.polygon) == 0:
+		print_debug("Polygon has not been drawn ; can't explode asteroid!")
+		return
+	visible = false
+	$StaticBody2D.queue_free()
+	
+
 func generate_asteroid_polygon() -> void:
 	await get_tree().create_timer(polygon_appear_delay).timeout
 	if is_regular:

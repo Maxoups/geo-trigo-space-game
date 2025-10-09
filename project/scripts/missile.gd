@@ -30,6 +30,6 @@ func explode() -> void:
 	queue_free()
 
 func _on_area_collision_body_entered(body: Node2D) -> void:
-	if body.has_method("destroy"):
-		body.destroy()
+	if body.has_method("explode"):
+		body.explode()
 	explode()
