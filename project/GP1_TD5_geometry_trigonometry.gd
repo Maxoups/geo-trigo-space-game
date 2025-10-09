@@ -27,6 +27,11 @@ FONCTIONS POUR VOUS AIDER:
 	atan2(y, x)
 		Donne l'angle de tangente x, y
 	
+	lerp_angle(a, b, weight)
+		Interpolation entre l'angle a et l'angle b de poids weight. On a:
+		lerp_angle(a, b, 0.0) = a, lerp_angle(a, b, 1.0) = b,
+		lerp_angle(a, b, 0.4) = (a*0.6 + b*0.4)/2.0
+	
 	sqrt(x) 
 		Donne la racine carrée de x >= 0.0
 	
@@ -38,9 +43,18 @@ FONCTIONS POUR VOUS AIDER:
 	
 	Vector2(a, b).angle_to(Vector2(c, d))
 		Retourne l'angle entre le Vecteur(A, B) et le Vecteur(C, D)
+	
+	Vector2(a, b).distance_to(Vector2(c, d))
+		Retourne la distance entre les deux points (a, b) et (c, d).
+	
+	Vector2(a, b).direction_to(Vector2(c, b))
+		Retourne la direction (vecteur normalisé) du point (a, b) vers le point (c, d)
 
 """
 
+func dummy():
+	#lerp_angle(a, b, weight)
+	pass
 
 
 ####### EXERCICE 1 #############################################################
@@ -59,14 +73,14 @@ func lerp_object_position(initial_position : Vector2, final_position : Vector2,
 
 # Interpoler la rotation de l'objet pour qu'il garde une orientation correcte
 # selon sa cible.
+# Bonus: Faire une interpolation fluide vers l'angle cible
 func lerp_object_rotation(object_rotation : float, object_position : Vector2,
 							target_position : Vector2) -> float:
-	# Si l'objet n'a pas de direction (ex: vitesse nulle), on ne change pas la rotation
 	var dir := (target_position - object_position).normalized()
 	if dir.length() == 0.0:
 		return object_rotation
 	var target_angle := atan2(dir.y, dir.x)
-	# Interpolation fluide vers l'angle cible (rotation progressive)
+	# Bonus: Interpolation fluide vers l'angle cible (rotation progressive)
 	var rotate_speed := 3.0  # facteur de lissage (plus grand = plus rapide)
 	var new_rotation := lerp_angle(object_rotation, target_angle, get_process_delta_time() * rotate_speed)
 	return new_rotation
@@ -85,10 +99,8 @@ func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : flo
 									satellite_position : Vector2) -> Dictionary[String, float]:
 	var radius_vec := satellite_position - orbit_center
 	var radius := radius_vec.length()
-	# Starting angle in radians, measured from +X axis
 	var starting_angle := radius_vec.angle()
-	# Optional: orbital speed (radians per second for one full revolution)
-	var speed := TAU / orbit_duration
+	var speed := TAU / orbit_duration # TAU = 2 PI
 	return {
 		"radius": radius,
 		"speed": speed,
@@ -109,12 +121,11 @@ func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : flo
 func get_satellite_orbit_transform(orbit_center : Vector2, starting_angle : float,
 		orbit_radius : Vector2, orbit_duration : float, current_time : float) -> Transform2D:
 	var current_angle := starting_angle + (current_time / orbit_duration) * TAU
-	# Compute position along the elliptical orbit
 	var current_pos := orbit_center + Vector2(
 		cos(current_angle) * orbit_radius.x,
 		sin(current_angle) * orbit_radius.y
 	)
-	# Calcul du vecteur de vélocité à l'instant t (dérivé de la position)
+	# Calcul du vecteur de vélocité à l'instant t (dérivée de la position)
 	var vel := Vector2(
 		-sin(current_angle) * orbit_radius.x,
 		 cos(current_angle) * orbit_radius.y
@@ -164,11 +175,11 @@ func get_direction_to(origin : Vector2, target : Vector2) -> Vector2:
 #      Si vous faites le bonus, pensez à retirer "_" de l'argument "_current_velocity".
 func get_velocity(position : Vector2, target_position : Vector2, speed : float, 
 							delta : float, current_velocity : Vector2) -> Vector2:
-	# direction normalisée vers la cible
+	# Direction normalisée vers la cible
 	var direction := get_direction_to(position, target_position)
-	# vitesse cible instantanée
+	# Vitesse cible instantanée
 	var desired_velocity := direction * speed * delta
-	# BONUS : interpolation lissée pour simuler accélération / inertie
+	# BONUS : Interpolation lissée pour simuler l'accélération
 	var acceleration := 0.45  # facteur d’accéleration
 	var new_velocity := current_velocity.lerp(desired_velocity, acceleration * delta)
 	return new_velocity
@@ -234,6 +245,8 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 # Détruire un astéroïde
 
 # Fracturer un polygone en un nombre de fragments donnés
+# On ne le fera pas mais à tester: générer des fragments qui prennent en compte
+# les différentes couches de polygones de couleurs différentes (cf asteroid.tscn)
 func shatter_polygon(polygon : PackedVector2Array,
 						nb_fragments : int) -> Array[PackedVector2Array]:
 	if polygon.size() < 3:
@@ -252,10 +265,8 @@ func shatter_polygon(polygon : PackedVector2Array,
 	for p in polygon:
 		centroid += p
 	centroid /= float(n)
-	# On crée n triangles (centroid, p[i], p[i+1]) en fan
-	# Puis on regroupe des triangles contigus pour former chaque fragment.
-	# Répartition équilibrée : certaines groupes auront (base+1) triangles si nécessaire.
-	var base := n / nb_fragments        # division entière en GDScript donne float -> on convertit
+	
+	var base := n / nb_fragments
 	base = int(n / nb_fragments)
 	var remainder := n % nb_fragments
 	var fragments : Array[PackedVector2Array] = []
@@ -267,9 +278,8 @@ func shatter_polygon(polygon : PackedVector2Array,
 			k += 1  # répartir le reste sur les premiers groupes
 		# un groupe de k triangles couvre k+1 sommets extérieurs consécutifs
 		var frag_points := PackedVector2Array()
-		# On ajoute le centroïde comme un sommet de l'éventail (cela produit des fragments en "fan")
 		frag_points.append(centroid)
-		# ajouter p[start] ... p[start + k] (mod n)
+		
 		for j in range(k + 1):
 			var idx := (start + j) % n
 			frag_points.append(polygon[idx])
