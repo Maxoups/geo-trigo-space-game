@@ -210,7 +210,7 @@ scale = Vector2(1.08294, 1.08294)
 texture = ExtResource("5_i7141")
 polygon_appear_delay = 1.5
 
-[node name="Asteroid7" parent="." instance=ExtResource("5_dss4m")]
+[node name="Asteroid7Target" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(618, -339)
 rotation = 0.795373
 scale = Vector2(0.85, 0.85)
@@ -291,18 +291,19 @@ position = Vector2(-1036, -62)
 path_points = [NodePath("../PointA"), NodePath("../PointB"), NodePath("../PointC"), NodePath("../PointD"), NodePath("../PointE"), NodePath("../PointF")]
 ship_name = "ExplorerShip"
 
-[node name="MotherShip" parent="." instance=ExtResource("42_6oujy")]
+[node name="MotherShip" parent="." node_paths=PackedStringArray("target") instance=ExtResource("42_6oujy")]
 position = Vector2(857, 406)
+target = NodePath("../Asteroid7Target")
 
 [node name="Label" parent="MotherShip" index="0"]
 text = "MotherShip:
     position = (x=857.00, y=406.00)
-    rotation = 123.72
+    rotation = 64.08
     scale = (x=0.75, y=0.75)"
 
 [node name="SpriteRoot" parent="MotherShip" index="1"]
 position = Vector2(90.6667, -18.6667)
-rotation = 2.1593
+rotation = 1.11834
 
 [node name="PointA" parent="." instance=ExtResource("2_71j4m")]
 material = SubResource("ShaderMaterial_qfnet")

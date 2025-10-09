@@ -2,7 +2,7 @@ extends Sprite2D
 class_name Asteroid
 
 
-const ASTEROID_RADIUS := [225.0, 185.0, 135.0, 100.0]
+const ASTEROID_RADIUS := [225.0, 175.0, 125.0, 70.0]
 
 @export var polygon_appear_delay := 0.0
 @export var is_regular := true
@@ -10,6 +10,7 @@ const ASTEROID_RADIUS := [225.0, 185.0, 135.0, 100.0]
 @onready var anim_time := randf_range(0.9, 1.4)
 @onready var rotation_start := rotation + randf_range(PI/15, PI/10)
 @onready var rotation_end := rotation
+@onready var polygons : Array[Polygon2D] = [$Polygon2D, $PolygonInner1, $PolygonInner2]
 
 
 func _ready() -> void:
@@ -23,19 +24,21 @@ func generate_asteroid_polygon() -> void:
 		_draw_all_regular_polygons()
 	else:
 		_draw_all_random_polygons()
-	if $Polygon2D.polygon != []:
+	if len($Polygon2D.polygon) > 0:
 		self_modulate = Color.TRANSPARENT
 		$Line2D.points = $Polygon2D.polygon
+		for p : Polygon2D in polygons:
+			p.global_scale = Vector2.ONE
+		$Line2D.global_scale = Vector2.ONE
 
 func _draw_all_regular_polygons() -> void:
-	var polygons : Array[Polygon2D] = [$Polygon2D, $PolygonInner1, $PolygonInner2]
-	for p : Polygon2D in polygons:
+	for i : int in range(len(polygons)):
+		var p := polygons[i]
 		p.polygon = GP1_TD.generate_regular_polygon(
-							scale.x * ASTEROID_RADIUS[0], 
+							scale.x * ASTEROID_RADIUS[i], 
 							randi_range(6, 12))
 
 func _draw_all_random_polygons() -> void:
-	var polygons : Array[Polygon2D] = [$Polygon2D, $PolygonInner1, $PolygonInner2]
 	for i : int in range(len(polygons)):
 		var p := polygons[i]
 		p.polygon = GP1_TD.generate_random_polygon(

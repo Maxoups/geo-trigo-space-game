@@ -18,13 +18,15 @@ const ROTATION_SPEED := 0.4
 func _ready() -> void:
 	$SpriteRoot/ShipSprites/AnimationShip.play("ship_idle")
 	anim_cannon.play("cannon_idle")
+	if Engine.is_editor_hint():
+		return
 	await get_tree().process_frame
 	Global.world.rotate_mothership.connect(rotate_ship)
 	Global.world.shoot_missile.connect(fire_cannon)
 
 
 func rotate_ship() -> void:
-	var new_rotation := GP1_TD.get_angle_to(global_position, target.global_position)
+	var new_rotation := GP1_TD.get_angle_to(global_position, target.global_position) + 3.0*PI/2.0
 	var t := create_tween().set_trans(Tween.TRANS_SINE)
 	var angle_difference : float = $SpriteRoot.rotation-new_rotation
 	var used_thruster : ThrusterEffect

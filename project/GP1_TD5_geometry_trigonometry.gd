@@ -212,7 +212,7 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 	
 	for i in range(number_of_sides):
 		var a := start_angle + angle_step * i
-		a += randf_range(-angle_step * 0.2, angle_step * 0.2) # irrégularité sur l'angle
+		a += randf_range(-angle_step * 0.1, angle_step * 0.1) # irrégularité sur l'angle
 		# Rayon aléatoire entre les deux bornes
 		var r := randf_range(internal_radius, external_radius)
 		var p := Vector2(cos(a), sin(a)) * r
