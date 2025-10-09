@@ -56,6 +56,7 @@ func lerp_object_position(initial_position : Vector2, final_position : Vector2,
 	# Votre code ici
 	return Vector2.ZERO
 
+
 # Interpoler la rotation de l'objet (donner l'angle entre l'objet et sa position
 # suivante)
 func lerp_object_rotation(object_position : Vector2, next_object_position : Vector2) -> float:
@@ -90,6 +91,7 @@ func get_satellite_orbit_parameters(orbit_center : Vector2, orbit_duration : flo
 		"starting_angle" : 0.0
 		}
 
+
 # Calculer la position et la rotation d'un satellite sur son orbite selon un 
 # angle donné.
 # Attention au rayon de l'orbite : c'est un vecteur (x, y). La trajectoire
@@ -121,9 +123,13 @@ func get_satellite_orbit_transform(orbit_center : Vector2, starting_angle : floa
 ####### EXERCICE 3 #############################################################
 # Faire tourner le MotherShip vers l'asteroïde obstacle de l'ExplorerShip.
 
-# Recréer la fonction get_angle_to()
+# Recréer la fonction angle_to()
 func get_angle_to(object : Vector2, target : Vector2) -> float:
-	print_debug("RECREER LA FONCTION GET_ANGLE_TO")
+	# Vecteurs relatifs
+	var diff := target - object
+	
+	# Retourner l’angle absolu entre (1,0) et diff
+	return atan2(diff.y, diff.x)
 	# Votre code ici
 	return 0.0
 
@@ -134,16 +140,32 @@ func get_angle_to(object : Vector2, target : Vector2) -> float:
 
 # Recréer la fonction get_direction_to()
 # Pensez à bien retourner un vecteur NORMALISÉ!
-func get_direction_to() -> Vector2:
+func get_direction_to(origin : Vector2, target : Vector2) -> Vector2:
+	var dir := target - origin
+	if dir.length() == 0.0:
+		return Vector2.ZERO
+	return dir.normalized()
 	# Votre code ici
 	return Vector2.ZERO
+
 
 # Donner la velocity = (direction * speed) du missile
 # Bonus: utiliser current_velocity pour donner une accélération à l'objet. 
 #      Si vous faites le bonus, pensez à retirer "_" de l'argument "_current_velocity".
 func get_velocity(position : Vector2, target_position : Vector2, speed : float, 
-							delta : float, _current_velocity : Vector2) -> Vector2:
+							delta : float, current_velocity : Vector2) -> Vector2:
+	# direction normalisée vers la cible
+	var direction := get_direction_to(position, target_position)
+	# vitesse cible instantanée
+	var desired_velocity := direction * speed
+	# BONUS : interpolation lissée pour simuler accélération / inertie
+	# (plus delta est petit, plus la transition est douce)
+	var acceleration := 10.0  # facteur d’inertie (ajustable)
+	var new_velocity := current_velocity.lerp(desired_velocity, delta * acceleration)
+	return new_velocity
+	# Votre code ici
 	return Vector2.ZERO
+
 
 
 ####### EXERCICE 5 #############################################################
@@ -170,6 +192,7 @@ func generate_regular_polygon(radius : float, number_of_sides : int) -> PackedVe
 
 	# Votre code ici
 	return []
+
 
 # Tracer un polygone quelconque selon un nombre de côtés, un rayon exterieur et un
 # rayon intérieur. Tous les points du polygons doivent être entre les deux rayons.
@@ -198,6 +221,7 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 	return points
 	# Votre code ici
 	return []
+
 
 
 ####### EXERCICE 6 #############################################################
