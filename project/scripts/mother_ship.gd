@@ -41,7 +41,6 @@ func rotate_ship() -> void:
 	used_thruster.is_active = false
 
 func fire_cannon() -> void:
-	await get_tree().create_timer(0.75).timeout
 	anim_cannon.play("cannon_fire")
 	Missile.spawn_missile(firing_marker.global_position, firing_marker.global_rotation)
 	await anim_cannon.animation_finished

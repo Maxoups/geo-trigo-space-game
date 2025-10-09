@@ -18,7 +18,7 @@ static func spawn_missile(position : Vector2, rotation : float) -> void:
 
 
 func _process(delta: float) -> void:
-	#velocity = GP1_TD.get_missile_velocity(position, target_position, speed, delta, velocity)
+	velocity = GP1_TD.get_velocity(position, target_position, speed, delta, velocity)
 	position += velocity
 
 func explode() -> void:
