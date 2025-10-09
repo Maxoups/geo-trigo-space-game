@@ -139,12 +139,14 @@ radius = 52.0171
 
 [node name="ExplorerShip" instance=ExtResource("1_xmtrk")]
 script = ExtResource("2_gj4eo")
+speed = 800.0
 
 [node name="Label" parent="." index="0"]
 offset_left = 33.0
 offset_top = -315.0
 offset_right = 787.0
 offset_bottom = 2.0
+text = "Ship"
 
 [node name="Sprite" type="Sprite2D" parent="SpriteRoot" index="0"]
 position = Vector2(0, 5)
