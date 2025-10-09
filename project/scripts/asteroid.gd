@@ -2,6 +2,11 @@ extends Sprite2D
 class_name Asteroid
 
 
+const ASTEROID_RADIUS := [225.0, 185.0, 135.0, 100.0]
+
+@export var polygon_appear_delay := 0.0
+@export var is_regular := true
+
 @onready var anim_time := randf_range(0.9, 1.4)
 @onready var rotation_start := rotation + randf_range(PI/15, PI/10)
 @onready var rotation_end := rotation
@@ -9,6 +14,34 @@ class_name Asteroid
 
 func _ready() -> void:
 	idle_animation()
+	await get_tree().process_frame
+	Global.world.generate_asteroids.connect(generate_asteroid_polygon)
+
+func generate_asteroid_polygon() -> void:
+	await get_tree().create_timer(polygon_appear_delay).timeout
+	if is_regular:
+		_draw_all_regular_polygons()
+	else:
+		_draw_all_random_polygons()
+	if $Polygon2D.polygon != []:
+		self_modulate = Color.TRANSPARENT
+		$Line2D.points = $Polygon2D.polygon
+
+func _draw_all_regular_polygons() -> void:
+	var polygons : Array[Polygon2D] = [$Polygon2D, $PolygonInner1, $PolygonInner2]
+	for p : Polygon2D in polygons:
+		p.polygon = GP1_TD.generate_regular_polygon(
+							scale.x * ASTEROID_RADIUS[0], 
+							randi_range(6, 12))
+
+func _draw_all_random_polygons() -> void:
+	var polygons : Array[Polygon2D] = [$Polygon2D, $PolygonInner1, $PolygonInner2]
+	for i : int in range(len(polygons)):
+		var p := polygons[i]
+		p.polygon = GP1_TD.generate_random_polygon(
+							scale.x * ASTEROID_RADIUS[i], 
+							scale.x * ASTEROID_RADIUS[i+1], 
+							randi_range(6, 12))
 
 func idle_animation() -> void:
 	var new_rot := rotation + randf_range(-PI/2, PI/2)
