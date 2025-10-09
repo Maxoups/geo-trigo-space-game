@@ -55,5 +55,5 @@ func ship_death() -> void:
 	if not alive:
 		return
 	alive = false
-	print_debug("ADD SHIP EXPLOSION ON DEATH")
+	ExplosionEffect.spawn_explosion_effect(global_position)
 	visible = false
