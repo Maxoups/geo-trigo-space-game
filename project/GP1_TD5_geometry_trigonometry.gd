@@ -204,13 +204,79 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 # Détruire un astéroïde
 
 # Fracturer un polygone en un nombre de fragments donnés
-func shatter_polygon(polygon : Polygon2D, nb_fragments : int) -> Array[Polygon2D]:
+func shatter_polygon(polygon : PackedVector2Array,
+						nb_fragments : int) -> Array[PackedVector2Array]:
+	if polygon.size() < 3:
+		push_error("polygon must have at least 3 points")
+		return []
+	if nb_fragments <= 0:
+		push_error("nb_fragments must be >= 1")
+		return []
+	
+	var n := polygon.size()
+	# si on demande plus de fragments que de côtés, on limite au nombre de côtés
+	if nb_fragments > n:
+		nb_fragments = n
+	# calcul d'un centroïde simple (moyenne des sommets)
+	var centroid := Vector2.ZERO
+	for p in polygon:
+		centroid += p
+	centroid /= float(n)
+	# On crée n triangles (centroid, p[i], p[i+1]) en fan
+	# Puis on regroupe des triangles contigus pour former chaque fragment.
+	# Répartition équilibrée : certaines groupes auront (base+1) triangles si nécessaire.
+	var base := n / nb_fragments        # division entière en GDScript donne float -> on convertit
+	base = int(n / nb_fragments)
+	var remainder := n % nb_fragments
+	var fragments : Array = []
+	var start := 0
+	for group_index in range(nb_fragments):
+		# déterminer combien de triangles dans ce groupe
+		var k := base
+		if group_index < remainder:
+			k += 1  # répartir le reste sur les premiers groupes
+		# un groupe de k triangles couvre k+1 sommets extérieurs consécutifs
+		var frag_points := PackedVector2Array()
+		# On ajoute le centroïde comme un sommet de l'éventail (cela produit des fragments en "fan")
+		frag_points.append(centroid)
+		# ajouter p[start] ... p[start + k] (mod n)
+		for j in range(k + 1):
+			var idx := (start + j) % n
+			frag_points.append(polygon[idx])
+		fragments.append(frag_points)
+		# avancer le pointeur de départ par k triangles
+		start += k
+	return fragments
+	
 	# Votre code ici
 	return []
 
-# Exploser les fragments d'un polygone selon un point d'impact impact_point et 
-# une vitesse speed
-func explode_fragment(impact_point : Vector2, speed : float) -> Vector2:
+
+# Renvoie la velocité d'un fragment d'un polygone explosé selon un point 
+# d'impact et une force
+func explode_fragment(fragment_position : Vector2, impact_point : Vector2, 
+						force : float) -> Vector2:
+	# direction du fragment depuis le point d'impact
+	var dir := fragment_position - impact_point
+	var dist := dir.length()
+	# cas limite : si le fragment est exactement au point d'impact,
+	# choisir une direction fixe
+	if dist < 0.0001:
+		dir = Vector2(0, -1)
+		dist = 1.0
+	dir = dir / dist  # normaliser
+	# atténuation selon la distance : on veut une décroissance douce
+	# (1 / (1 + dist)) fonctionne bien pour des distances en pixels.
+	var attenuation := 1.0 / (1.0 + dist)
+	# ajouter un petit jitter angulaire pour varier les trajectoires (le game feel c'est bien)
+	var jitter := randf_range(-PI * 0.08, PI * 0.08)
+	dir = dir.rotated(jitter)
+	# composante tangentielle aléatoire pour effet de rotation/éparpillement
+	var tangent := Vector2(-dir.y, dir.x) * randf_range(-0.35, 0.35)
+	# calcul final de la vélocité
+	var velocity := dir * force * attenuation + tangent * force * 0.2
+	return velocity
+	
 	# Votre code ici
 	return Vector2.ZERO
 
