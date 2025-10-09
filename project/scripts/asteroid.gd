@@ -12,6 +12,8 @@ const ASTEROID_RADIUS := [240.0, 175.0, 125.0, 70.0]
 @onready var rotation_end := rotation
 @onready var polygons : Array[Polygon2D] = [$Polygon2D, $PolygonInner1, $PolygonInner2]
 
+var idle_anim_tween : Tween = null
+
 
 func _ready() -> void:
 	idle_animation()
@@ -22,13 +24,15 @@ func explode(impact_point : Vector2, explosion_force : float) -> void:
 	if len($Polygon2D.polygon) == 0:
 		print_debug("Polygon has not been drawn ; can't explode asteroid!")
 		return
-	visible = false
+	modulate = Color(1, 1, 1, 0.5)
+	if is_instance_valid(idle_anim_tween):
+		idle_anim_tween.kill()
 	$StaticBody2D.queue_free()
 	var fragments := GP1_TD.shatter_polygon($Polygon2D.polygon, randi_range(8, 14))
 	for fragment : PackedVector2Array in fragments:
 		AsteroidFragment.spawn_asteroid_fragment(
 			global_position, 
-			0.0, fragment, GP1_TD.explode_fragment($Polygon2D.polygon, fragment, 
+			0.0, fragment, GP1_TD.explode_fragment($Polygon2D.polygon, global_position, fragment, 
 													impact_point, explosion_force)
 		)
 
@@ -62,7 +66,7 @@ func _draw_all_random_polygons() -> void:
 
 func idle_animation() -> void:
 	var new_rot := rotation + randf_range(-PI/2, PI/2)
-	var t := create_tween().set_trans(Tween.TRANS_CUBIC)
-	t.tween_property(self, "rotation", rotation_start, anim_time)
-	t.tween_property(self, "rotation", rotation_end, anim_time)
-	t.finished.connect(idle_animation)
+	idle_anim_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
+	idle_anim_tween.tween_property(self, "rotation", rotation_start, anim_time)
+	idle_anim_tween.tween_property(self, "rotation", rotation_end, anim_time)
+	idle_anim_tween.finished.connect(idle_animation)

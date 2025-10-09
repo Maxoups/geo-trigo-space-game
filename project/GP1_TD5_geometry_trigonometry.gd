@@ -312,7 +312,7 @@ func _centroid_and_area(polygon: PackedVector2Array) -> Dictionary:
 
 
 # Calcul de la vélocité d'un fragment explosé
-func explode_fragment(asteroid_polygon : PackedVector2Array, 
+func explode_fragment(asteroid_polygon : PackedVector2Array, asteroid_position : Vector2,
 				fragment_polygon : PackedVector2Array, impact_point : Vector2, 
 				force : float) -> Vector2:
 	
@@ -321,7 +321,7 @@ func explode_fragment(asteroid_polygon : PackedVector2Array,
 	var fragment_area : float = fragment_info["area"]
 	
 	# Direction depuis le point d’impact vers le centroïde du fragment
-	var dir := fragment_centroid - impact_point
+	var dir := asteroid_position + fragment_centroid - impact_point
 	var dist := dir.length()
 	
 	if dist < 0.0001:
@@ -338,8 +338,7 @@ func explode_fragment(asteroid_polygon : PackedVector2Array,
 	attenuation = clamp(attenuation, 0.05, 1.0)
 	
 	# Taille du fragment : plus petit => plus rapide
-	var size_factor := sqrt(fragment_area)
-	print("fragment_area = " + str(fragment_area))
+	var size_factor := sqrt(fragment_area / 8000.0)
 	size_factor = clamp(size_factor, 0.6, 4.0)
 	
 	# Calcul final de la vélocité

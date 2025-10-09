@@ -293,7 +293,6 @@ ship_name = "ExplorerShip"
 
 [node name="MotherShip" parent="." node_paths=PackedStringArray("target") instance=ExtResource("42_6oujy")]
 position = Vector2(857, 406)
-rotation_speed = 0.55
 target = NodePath("../Asteroid7Target")
 
 [node name="Label" parent="MotherShip" index="0"]
