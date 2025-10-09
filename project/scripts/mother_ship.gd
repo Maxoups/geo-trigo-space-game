@@ -3,7 +3,7 @@ extends Ship
 class_name MotherShip
 
 
-const ROTATION_SPEED := 0.4
+@export var rotation_speed := 0.55
 
 @export var target : Node2D
 
@@ -37,7 +37,7 @@ func rotate_ship() -> void:
 	else:
 		used_thruster = thruster_right
 	t.tween_property($SpriteRoot, "rotation", new_rotation, 
-						abs(angle_difference) / ROTATION_SPEED)
+						abs(angle_difference) / rotation_speed)
 	used_thruster.is_active = true
 	await t.finished
 	used_thruster.is_active = false

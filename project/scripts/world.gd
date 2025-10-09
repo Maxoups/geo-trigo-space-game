@@ -27,9 +27,9 @@ const TIME_BETWEEN_EXERCISES := 2.5
 var exercises : Array[ExerciseDisplay] = [
 	ExerciseDisplay.new(5, "Générer procéduralement les astéroïdes.", generate_asteroids, 3.0),
 	ExerciseDisplay.new(2, "Décrire l'orbite d'un stallite.", start_satellite_orbits, 4.0),
-	ExerciseDisplay.new(3, "Faire tourner le vaisseau mère vers l'asteroïde obstacle.", rotate_mothership, 1.5),
+	ExerciseDisplay.new(3, "Faire tourner le vaisseau mère vers l'asteroïde obstacle.", rotate_mothership, 3.5),
 	ExerciseDisplay.new(4, "Tirer un missile sur l'astéroïde obstacle.", shoot_missile, 1.5),
-	ExerciseDisplay.new(6, "Faire exploser un astéroïde.", explode_asteroid, 1.5),
+	ExerciseDisplay.new(6, "Faire exploser un astéroïde.", explode_asteroid, 0.75),
 	ExerciseDisplay.new(1, "Faire naviguer la sonde jusqu'à son objectif.", move_explorer_ship, 1.5),
 ]
 
