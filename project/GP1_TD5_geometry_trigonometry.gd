@@ -281,16 +281,87 @@ func shatter_polygon(polygon : PackedVector2Array,
 	# Votre code ici
 	return []
 
+# Calcul du centre et de l'aire d'un polygone
+func _centroid_and_area(polygon: PackedVector2Array) -> Dictionary:
+	var n := polygon.size()
+	var cx := 0.0
+	var cy := 0.0
+	var a := 0.0
+	
+	for i in range(n):
+		var p0 := polygon[i]
+		var p1 := polygon[(i + 1) % n]
+		var cross := p0.x * p1.y - p1.x * p0.y
+		a += cross
+		cx += (p0.x + p1.x) * cross
+		cy += (p0.y + p1.y) * cross
+	a *= 0.5
+	
+	var factor := 1.0 / (6.0 * a)
+	var centroid := Vector2(cx * factor, cy * factor)
+	return {
+		"centroid": centroid, 
+		"area": abs(a)
+	}
+	
+	# Votre code ici
+	return {
+		"centroid" : Vector2.ZERO,
+		"area" : 0.0
+	}
 
-# Renvoie la velocité d'un fragment d'un polygone explosé selon un point 
-# d'impact et une force
+
+# Calcul de la vélocité d'un fragment explosé
 func explode_fragment(asteroid_polygon : PackedVector2Array, 
 				fragment_polygon : PackedVector2Array, impact_point : Vector2, 
 				force : float) -> Vector2:
 	
+	var frag_info := _centroid_and_area(fragment_polygon)
+	var asteroid_info := _centroid_and_area(asteroid_polygon)
+	var frag_centroid : Vector2 = frag_info["centroid"]
+	var frag_area : float = frag_info["area"]
+	var asteroid_area : float = asteroid_info["area"]
+	
+	# Direction depuis le point d’impact vers le centroïde du fragment
+	var dir := frag_centroid - impact_point
+	var dist := dir.length()
+	
+	if dist < 0.0001:
+		dir = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0))
+		dist = dir.length()
+		if dist < 0.0001:
+			dir = Vector2(0, -1)
+			dist = 1.0
+	dir = dir.normalized()
+	
+	# Atténuation selon la distance
+	var distance_scale := 0.02
+	var attenuation := 1.0 / (1.0 + dist * distance_scale)
+	attenuation = clamp(attenuation, 0.05, 1.0)
+	
+	# Taille du fragment : plus petit => plus rapide
+	var size_factor := 1.0
+	if frag_area > 0.000001 and asteroid_area > 0.000001:
+		size_factor = sqrt(asteroid_area / frag_area)
+		size_factor = clamp(size_factor, 0.6, 4.0)
+	
+	# Légère rotation aléatoire
+	var jitter := randf_range(-PI * 0.07, PI * 0.07)
+	dir = dir.rotated(jitter)
+	
+	# Aléatoire dans l'angle
+	var tangent := Vector2(-dir.y, dir.x) * randf_range(-0.35, 0.35)
+	
+	# Calcul final de la vélocité
+	var velocity := dir * force * attenuation * size_factor
+	velocity += tangent * force * 0.18
+	velocity += Vector2(randf_range(-1,1), randf_range(-1,1)) * (force * 0.02)
+	return velocity
 	
 	# Votre code ici
 	return Vector2.ZERO
+
+
 
 
 
