@@ -169,7 +169,7 @@ func get_velocity(position : Vector2, target_position : Vector2, speed : float,
 	# vitesse cible instantanée
 	var desired_velocity := direction * speed * delta
 	# BONUS : interpolation lissée pour simuler accélération / inertie
-	var acceleration := 0.2  # facteur d’accéleration
+	var acceleration := 0.45  # facteur d’accéleration
 	var new_velocity := current_velocity.lerp(desired_velocity, acceleration * delta)
 	return new_velocity
 	# Votre code ici
@@ -258,7 +258,7 @@ func shatter_polygon(polygon : PackedVector2Array,
 	var base := n / nb_fragments        # division entière en GDScript donne float -> on convertit
 	base = int(n / nb_fragments)
 	var remainder := n % nb_fragments
-	var fragments : Array = []
+	var fragments : Array[PackedVector2Array] = []
 	var start := 0
 	for group_index in range(nb_fragments):
 		# déterminer combien de triangles dans ce groupe
@@ -316,14 +316,12 @@ func explode_fragment(asteroid_polygon : PackedVector2Array,
 				fragment_polygon : PackedVector2Array, impact_point : Vector2, 
 				force : float) -> Vector2:
 	
-	var frag_info := _centroid_and_area(fragment_polygon)
-	var asteroid_info := _centroid_and_area(asteroid_polygon)
-	var frag_centroid : Vector2 = frag_info["centroid"]
-	var frag_area : float = frag_info["area"]
-	var asteroid_area : float = asteroid_info["area"]
+	var fragment_info := _centroid_and_area(fragment_polygon)
+	var fragment_centroid : Vector2 = fragment_info["centroid"]
+	var fragment_area : float = fragment_info["area"]
 	
 	# Direction depuis le point d’impact vers le centroïde du fragment
-	var dir := frag_centroid - impact_point
+	var dir := fragment_centroid - impact_point
 	var dist := dir.length()
 	
 	if dist < 0.0001:
@@ -340,21 +338,12 @@ func explode_fragment(asteroid_polygon : PackedVector2Array,
 	attenuation = clamp(attenuation, 0.05, 1.0)
 	
 	# Taille du fragment : plus petit => plus rapide
-	var size_factor := 1.0
-	if frag_area > 0.000001 and asteroid_area > 0.000001:
-		size_factor = sqrt(asteroid_area / frag_area)
-		size_factor = clamp(size_factor, 0.6, 4.0)
-	
-	# Légère rotation aléatoire
-	var jitter := randf_range(-PI * 0.07, PI * 0.07)
-	dir = dir.rotated(jitter)
-	
-	# Aléatoire dans l'angle
-	var tangent := Vector2(-dir.y, dir.x) * randf_range(-0.35, 0.35)
+	var size_factor := sqrt(fragment_area)
+	print("fragment_area = " + str(fragment_area))
+	size_factor = clamp(size_factor, 0.6, 4.0)
 	
 	# Calcul final de la vélocité
 	var velocity := dir * force * attenuation * size_factor
-	velocity += tangent * force * 0.18
 	velocity += Vector2(randf_range(-1,1), randf_range(-1,1)) * (force * 0.02)
 	return velocity
 	

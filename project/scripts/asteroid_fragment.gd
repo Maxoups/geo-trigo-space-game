@@ -16,7 +16,12 @@ static func spawn_asteroid_fragment(pos : Vector2, rot : float, polygon : Packed
 
 
 var velocity : Vector2
+var debug_mult := 0.0
 
+
+func _ready() -> void:
+	await get_tree().create_timer(2.0).timeout
+	debug_mult = 1.0
 
 func _process(delta: float) -> void:
-	position += velocity * delta
+	position += velocity * delta * debug_mult

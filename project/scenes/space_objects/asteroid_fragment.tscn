@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://rtrcnwo68l8n" path="res://scripts/asteroid_fragment.gd" id="1_roa45"]
 
 [node name="AsteroidFragment" type="Polygon2D"]
+color = Color(0.6, 0.439216, 0.333333, 1)
 script = ExtResource("1_roa45")

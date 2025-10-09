@@ -24,15 +24,11 @@ func explode(impact_point : Vector2, explosion_force : float) -> void:
 		return
 	visible = false
 	$StaticBody2D.queue_free()
-	var polygons := GP1_TD.shatter_polygon($Polygon2D.polygon, randi_range(8, 14))
-	for polygon : PackedVector2Array in polygons:
-		var p_center := Vector2.ZERO
-		for p : Vector2 in polygon:
-			p_center += p
-		p_center /= float(polygon.size())
+	var fragments := GP1_TD.shatter_polygon($Polygon2D.polygon, randi_range(8, 14))
+	for fragment : PackedVector2Array in fragments:
 		AsteroidFragment.spawn_asteroid_fragment(
-			global_position + p_center, 
-			0.0, polygon, GP1_TD.explode_fragment($Polygon2D.polygon, polygon, 
+			global_position, 
+			0.0, fragment, GP1_TD.explode_fragment($Polygon2D.polygon, fragment, 
 													impact_point, explosion_force)
 		)
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://pcmkgiuxl6hg"]
+[gd_scene load_steps=5 format=3 uid="uid://pcmkgiuxl6hg"]
 
 [ext_resource type="Texture2D" uid="uid://crm4hvl7kfeba" path="res://resources/SpaceShooterSprites/Meteors/spaceMeteors_001.png" id="1_b8xwe"]
 [ext_resource type="Script" uid="uid://tjl5grbjlosp" path="res://scripts/asteroid.gd" id="2_555rt"]
+[ext_resource type="Script" uid="uid://4jb67rgwcvk5" path="res://scripts/explodable_object.gd" id="3_tg3kj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_555rt"]
 radius = 208.753
@@ -11,6 +12,7 @@ texture = ExtResource("1_b8xwe")
 script = ExtResource("2_555rt")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+script = ExtResource("3_tg3kj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 visible = false
@@ -32,3 +34,5 @@ default_color = Color(0.360784, 0.266667, 0.203922, 1)
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2(8, -135)
+
+[connection signal="explosion" from="StaticBody2D" to="." method="explode"]

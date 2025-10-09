@@ -44,6 +44,7 @@ func rotate_ship() -> void:
 
 func fire_cannon() -> void:
 	anim_cannon.play("cannon_fire")
+	await get_tree().create_timer(0.25).timeout
 	Missile.spawn_missile(firing_marker.global_position, firing_marker.global_rotation,
 								target.global_position)
 	await anim_cannon.animation_finished
