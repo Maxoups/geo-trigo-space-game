@@ -186,7 +186,7 @@ points = PackedVector2Array(0, -5000, 0, 5000)
 width = 5.0
 
 [node name="PlayerCamera" parent="." instance=ExtResource("2_oo54l")]
-position = Vector2(0, -107)
+position = Vector2(117, -170)
 
 [node name="Asteroid1" parent="." instance=ExtResource("5_dss4m")]
 position = Vector2(-394, 321)

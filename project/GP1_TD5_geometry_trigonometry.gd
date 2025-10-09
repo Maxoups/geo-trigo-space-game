@@ -348,10 +348,3 @@ func explode_fragment(asteroid_polygon : PackedVector2Array, asteroid_position :
 	
 	# Votre code ici
 	return Vector2.ZERO
-
-
-
-
-
-####### BONUS: EXERCICE 7 ######################################################
-# Shaders?
