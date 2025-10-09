@@ -289,7 +289,7 @@ _data = {
 
 [node name="MotherShip" instance=ExtResource("1_isupk")]
 script = ExtResource("2_683g5")
-rotation_speed = null
+rotation_speed = 0.55
 ship_name = "MotherShip"
 
 [node name="Label" parent="." index="0"]

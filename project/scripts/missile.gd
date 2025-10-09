@@ -4,7 +4,7 @@ class_name Missile
 
 const MISSILE_RES := preload("res://scenes/space_objects/missile.tscn")
 
-@export var speed := 200.0
+@export var speed := 800.0
 @export var target_position : Vector2
 @export var velocity : Vector2
 var has_exploded := false
@@ -14,7 +14,7 @@ static func spawn_missile(position : Vector2, rotation : float, new_target_pos :
 	var missile_instance := MISSILE_RES.instantiate()
 	missile_instance.global_position = position
 	missile_instance.global_rotation = rotation
-	new_target_pos = new_target_pos
+	missile_instance.target_position = new_target_pos
 	Global.world.add_child(missile_instance)
 
 

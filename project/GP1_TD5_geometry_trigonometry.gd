@@ -169,8 +169,8 @@ func get_velocity(position : Vector2, target_position : Vector2, speed : float,
 	# vitesse cible instantanée
 	var desired_velocity := direction * speed * delta
 	# BONUS : interpolation lissée pour simuler accélération / inertie
-	var acceleration := 0.1  # facteur d’inertie (ajustable)
-	var new_velocity := current_velocity.lerp(desired_velocity, acceleration)
+	var acceleration := 0.2  # facteur d’accéleration
+	var new_velocity := current_velocity.lerp(desired_velocity, acceleration * delta)
 	return new_velocity
 	# Votre code ici
 	return Vector2.ZERO
