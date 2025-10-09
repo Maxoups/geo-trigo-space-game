@@ -46,6 +46,7 @@ FONCTIONS POUR VOUS AIDER:
 # Interpoler la position de l'objet
 func lerp_object_position(initial_position : Vector2, final_position : Vector2, 
 						speed : float, current_time : float) -> Vector2:
+	
 	# Votre code ici
 	return Vector2.ZERO
 

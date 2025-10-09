@@ -137,9 +137,10 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_x5pj3"]
 radius = 52.0171
 
-[node name="ExplorerShip" instance=ExtResource("1_xmtrk")]
+[node name="ExplorerShip" node_paths=PackedStringArray("path_points") instance=ExtResource("1_xmtrk")]
 script = ExtResource("2_gj4eo")
 speed = 800.0
+path_points = []
 
 [node name="Label" parent="." index="0"]
 offset_left = 33.0
