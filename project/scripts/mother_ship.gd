@@ -5,6 +5,8 @@ class_name MotherShip
 
 const ROTATION_SPEED := 0.4
 
+@export var target : Node2D
+
 @onready var cannon_hull := $SpriteRoot/ShipSprites/ShipHull/ShipCannonHull
 @onready var cannon_cockpit := $SpriteRoot/ShipSprites/ShipHull/ShipHead/ShipCannonCockpit
 @onready var thruster_right := $SpriteRoot/ShipSprites/ShipHull/ShipThrusterRight/ThrusterEffect
@@ -16,9 +18,13 @@ const ROTATION_SPEED := 0.4
 func _ready() -> void:
 	$SpriteRoot/ShipSprites/AnimationShip.play("ship_idle")
 	anim_cannon.play("cannon_idle")
+	await get_tree().process_frame
+	Global.world.rotate_mothership.connect(rotate_ship)
+	Global.world.shoot_missile.connect(fire_cannon)
 
-func fire_cannon(target_position : Vector2) -> void:
-	var new_rotation := GP1_TD.get_angle_to(global_position, target_position)
+
+func rotate_ship() -> void:
+	var new_rotation := GP1_TD.get_angle_to(global_position, target.global_position)
 	var t := create_tween().set_trans(Tween.TRANS_SINE)
 	var angle_difference : float = $SpriteRoot.rotation-new_rotation
 	var used_thruster : ThrusterEffect
@@ -33,6 +39,8 @@ func fire_cannon(target_position : Vector2) -> void:
 	used_thruster.is_active = true
 	await t.finished
 	used_thruster.is_active = false
+
+func fire_cannon() -> void:
 	await get_tree().create_timer(0.75).timeout
 	anim_cannon.play("cannon_fire")
 	Missile.spawn_missile(firing_marker.global_position, firing_marker.global_rotation)
