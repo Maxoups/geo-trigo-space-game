@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btlhatvdefglc"]
+
+[ext_resource type="Script" uid="uid://rtrcnwo68l8n" path="res://scripts/asteroid_fragment.gd" id="1_roa45"]
+
+[node name="AsteroidFragment" type="Polygon2D"]
+script = ExtResource("1_roa45")
