@@ -18,14 +18,23 @@ func _ready() -> void:
 	await get_tree().process_frame
 	Global.world.generate_asteroids.connect(generate_asteroid_polygon)
 
-func explode() -> void:
+func explode(impact_point : Vector2, explosion_force : float) -> void:
 	if len($Polygon2D.polygon) == 0:
 		print_debug("Polygon has not been drawn ; can't explode asteroid!")
 		return
 	visible = false
 	$StaticBody2D.queue_free()
-	var fragments := GP1_TD.shatter_polygon($Polygon2D.polygon, randi_range(8, 14))
-	print_debug("Spawn each fragment and give them a velocity (custom polygon2Ds)")
+	var polygons := GP1_TD.shatter_polygon($Polygon2D.polygon, randi_range(8, 14))
+	for polygon : PackedVector2Array in polygons:
+		var p_center := Vector2.ZERO
+		for p : Vector2 in polygon:
+			p_center += p
+		p_center /= float(polygon.size())
+		AsteroidFragment.spawn_asteroid_fragment(
+			global_position + p_center, 
+			0.0, polygon, GP1_TD.explode_fragment($Polygon2D.polygon, polygon, 
+													impact_point, explosion_force)
+		)
 
 func generate_asteroid_polygon() -> void:
 	await get_tree().create_timer(polygon_appear_delay).timeout

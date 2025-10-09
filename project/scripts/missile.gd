@@ -4,6 +4,7 @@ class_name Missile
 
 const MISSILE_RES := preload("res://scenes/space_objects/missile.tscn")
 
+@export var explosion_force := 1000.0
 @export var speed := 800.0
 @export var target_position : Vector2
 @export var velocity : Vector2
@@ -31,5 +32,5 @@ func explode() -> void:
 
 func _on_area_collision_body_entered(body: Node2D) -> void:
 	if body.has_method("explode"):
-		body.explode()
+		body.explode(global_position, explosion_force)
 	explode()

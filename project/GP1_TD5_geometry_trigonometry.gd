@@ -284,28 +284,10 @@ func shatter_polygon(polygon : PackedVector2Array,
 
 # Renvoie la velocité d'un fragment d'un polygone explosé selon un point 
 # d'impact et une force
-func explode_fragment(fragment_position : Vector2, impact_point : Vector2, 
-						force : float) -> Vector2:
-	# direction du fragment depuis le point d'impact
-	var dir := fragment_position - impact_point
-	var dist := dir.length()
-	# cas limite : si le fragment est exactement au point d'impact,
-	# choisir une direction fixe
-	if dist < 0.0001:
-		dir = Vector2(0, -1)
-		dist = 1.0
-	dir = dir / dist  # normaliser
-	# atténuation selon la distance : on veut une décroissance douce
-	# (1 / (1 + dist)) fonctionne bien pour des distances en pixels.
-	var attenuation := 1.0 / (1.0 + dist)
-	# ajouter un petit jitter angulaire pour varier les trajectoires (le game feel c'est bien)
-	var jitter := randf_range(-PI * 0.08, PI * 0.08)
-	dir = dir.rotated(jitter)
-	# composante tangentielle aléatoire pour effet de rotation/éparpillement
-	var tangent := Vector2(-dir.y, dir.x) * randf_range(-0.35, 0.35)
-	# calcul final de la vélocité
-	var velocity := dir * force * attenuation + tangent * force * 0.2
-	return velocity
+func explode_fragment(asteroid_polygon : PackedVector2Array, 
+				fragment_polygon : PackedVector2Array, impact_point : Vector2, 
+				force : float) -> Vector2:
+	
 	
 	# Votre code ici
 	return Vector2.ZERO
