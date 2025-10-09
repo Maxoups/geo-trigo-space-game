@@ -274,8 +274,10 @@ central_body = NodePath("../Asteroid1")
 orbit_duration = 13.0
 initial_delay = 0.0
 
-[node name="ExplorerShip" parent="." instance=ExtResource("41_rga7q")]
+[node name="ExplorerShip" parent="." node_paths=PackedStringArray("path_points") instance=ExtResource("41_rga7q")]
 position = Vector2(-1036, -62)
+speed = 300.0
+path_points = [NodePath("../PointA"), NodePath("../PointB"), NodePath("../PointC"), NodePath("../PointD"), NodePath("../PointE"), NodePath("../PointF")]
 ship_name = "ExplorerShip"
 
 [node name="MotherShip" parent="." instance=ExtResource("42_6oujy")]
@@ -320,7 +322,7 @@ position = Vector2(914, -338)
 point_name = "E"
 point_color = Color(0, 0.623529, 0.623529, 1)
 
-[node name="Point" parent="." instance=ExtResource("2_71j4m")]
+[node name="PointF" parent="." instance=ExtResource("2_71j4m")]
 material = SubResource("ShaderMaterial_luhhm")
 position = Vector2(802, 156)
 point_name = "F"

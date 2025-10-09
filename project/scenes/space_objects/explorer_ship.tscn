@@ -139,7 +139,7 @@ radius = 52.0171
 
 [node name="ExplorerShip" node_paths=PackedStringArray("path_points") instance=ExtResource("1_xmtrk")]
 script = ExtResource("2_gj4eo")
-speed = 800.0
+speed = 300.0
 path_points = []
 
 [node name="Label" parent="." index="0"]

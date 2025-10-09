@@ -46,7 +46,10 @@ FONCTIONS POUR VOUS AIDER:
 # Interpoler la position de l'objet
 func lerp_object_position(initial_position : Vector2, final_position : Vector2, 
 						speed : float, current_time : float) -> Vector2:
-	
+	var dist : float = initial_position.distance_to(final_position)
+	var total_time : float = dist / speed
+	var progress : float = min(1.0, current_time / total_time)
+	return initial_position * (1-progress) + final_position * (progress)
 	# Votre code ici
 	return Vector2.ZERO
 
