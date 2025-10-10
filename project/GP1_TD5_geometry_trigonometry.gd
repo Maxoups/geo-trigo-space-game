@@ -244,53 +244,133 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 ####### EXERCICE 6 #############################################################
 # Détruire un astéroïde
 
-# Fracturer un polygone en un nombre de fragments donnés ;
-# On peut considérer que les fragments sont tous les triangles, et ont tous en
-# commun le centre du polygon (par simplicité)
-# Sinon, algo de Voronoi
-func shatter_polygon(polygon : PackedVector2Array,
-						nb_fragments : int) -> Array[PackedVector2Array]:
-	if polygon.size() < 3:
-		push_error("polygon must have at least 3 points")
-		return []
-	if nb_fragments <= 0:
-		push_error("nb_fragments must be >= 1")
+# Returns a list of polygon fragments (PackedVector2Array)
+# polygon: PackedVector2Array
+# n: number of desired fragments
+# rng_seed: optional seed (-1 = random)
+func shatter_polygon(polygon: PackedVector2Array, n: int, rng_seed: int = -1) -> Array:
+	if polygon.size() < 3 or n <= 0:
 		return []
 	
-	var n := polygon.size()
-	# si on demande plus de fragments que de côtés, on limite au nombre de côtés
-	if nb_fragments > n:
-		nb_fragments = n
-	# calcul d'un centroïde simple (moyenne des sommets)
-	var centroid := Vector2.ZERO
-	for p in polygon:
-		centroid += p
-	centroid /= float(n)
+	var rng := RandomNumberGenerator.new()
+	if rng_seed >= 0:
+		rng.seed = rng_seed
+	else:
+		rng.randomize()
 	
-	var base := n / nb_fragments
-	base = int(n / nb_fragments)
-	var remainder := n % nb_fragments
-	var fragments : Array[PackedVector2Array] = []
-	var start := 0
-	for group_index in range(nb_fragments):
-		# déterminer combien de triangles dans ce groupe
-		var k := base
-		if group_index < remainder:
-			k += 1  # répartir le reste sur les premiers groupes
-		# un groupe de k triangles couvre k+1 sommets extérieurs consécutifs
-		var frag_points := PackedVector2Array()
-		frag_points.append(centroid)
-		
-		for j in range(k + 1):
-			var idx := (start + j) % n
-			frag_points.append(polygon[idx])
-		fragments.append(frag_points)
-		# avancer le pointeur de départ par k triangles
-		start += k
+	var seeds: Array = _sample_points_in_polygon(polygon, n, rng)
+	var poly_arr: Array[Vector2] = []
+	for v in polygon:
+		poly_arr.append(v)
+	
+	var fragments: Array = []
+	for i in range(seeds.size()):
+		var cell : Array[Vector2] = poly_arr.duplicate()
+		var si: Vector2 = seeds[i]
+		for j in range(seeds.size()):
+			if i == j:
+				continue
+			var sj: Vector2 = seeds[j]
+			var normal := sj - si
+			var C := (sj.dot(sj) - si.dot(si)) * 0.5
+			cell = _clip_by_halfplane(cell, normal, C)
+			if cell.size() < 3:
+				break
+		if cell.size() >= 3:
+			var packed := PackedVector2Array()
+			for v in cell:
+				packed.append(v)
+			fragments.append(packed)
+	
 	return fragments
+
+
+# -------------------------------------------------------------
+# Helper: sample random points inside polygon using rejection
+# -------------------------------------------------------------
+func _sample_points_in_polygon(polygon: PackedVector2Array, n: int, rng: RandomNumberGenerator) -> Array:
+	var pts: Array = []
 	
-	# Votre code ici
-	return []
+	var xmin := INF
+	var xmax := -INF
+	var ymin := INF
+	var ymax := -INF
+	
+	for v in polygon:
+		xmin = min(xmin, v.x)
+		xmax = max(xmax, v.x)
+		ymin = min(ymin, v.y)
+		ymax = max(ymax, v.y)
+	
+	var attempts := 0
+	while pts.size() < n and attempts < n * 5000:
+		attempts += 1
+		var p := Vector2(rng.randf_range(xmin, xmax), rng.randf_range(ymin, ymax))
+		if _point_in_polygon(p, polygon):
+			pts.append(p)
+	
+	return pts
+
+
+# -------------------------------------------------------------
+# Helper: point-in-polygon (ray casting)
+# -------------------------------------------------------------
+func _point_in_polygon(pt: Vector2, polygon: PackedVector2Array) -> bool:
+	var inside := false
+	var m := polygon.size()
+	for i in range(m):
+		var a := polygon[i]
+		var b := polygon[(i + 1) % m]
+		if (a.y > pt.y) != (b.y > pt.y):
+			var t := (pt.y - a.y) / (b.y - a.y)
+			var x := a.x + t * (b.x - a.x)
+			if x > pt.x:
+				inside = not inside
+	return inside
+
+
+# -------------------------------------------------------------
+# Helper: clip polygon by half-plane (Sutherland–Hodgman)
+# Keeps points where dot(p, normal) <= C
+# -------------------------------------------------------------
+func _clip_by_halfplane(poly_in: Array[Vector2], normal: Vector2, C: float) -> Array[Vector2]:
+	var out: Array = []
+	var m := poly_in.size()
+	if m == 0:
+		return out
+	
+	for i in range(m):
+		var A := poly_in[i]
+		var B := poly_in[(i + 1) % m]
+		var va := A.dot(normal) - C
+		var vb := B.dot(normal) - C
+		var ina := va <= 0.0
+		var inb := vb <= 0.0
+		
+		if ina and inb:
+			out.append(B)
+		elif ina and not inb:
+			var d := vb - va
+			if abs(d) > 1e-12:
+				var t : float = clamp(-va / d, 0.0, 1.0)
+				out.append(A + (B - A) * t)
+		elif (not ina) and inb:
+			var d2 := vb - va
+			if abs(d2) > 1e-12:
+				var t2 : float = clamp(-va / d2, 0.0, 1.0)
+				out.append(A + (B - A) * t2)
+			out.append(B)
+	
+	# remove duplicates
+	var cleaned: Array[Vector2] = []
+	for q in out:
+		if cleaned.size() == 0 or (cleaned[-1].distance_to(q) > 1e-7):
+			cleaned.append(q)
+	if cleaned.size() > 1 and cleaned[0].distance_to(cleaned[-1]) < 1e-7:
+		cleaned.pop_back()
+	
+	return cleaned
+
 
 # Calcul du centre et de l'aire d'un polygone
 func centroid_and_area(polygon: PackedVector2Array) -> Dictionary:

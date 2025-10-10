@@ -21,13 +21,13 @@ func _ready() -> void:
 	Global.world.generate_asteroids.connect(generate_asteroid_polygon)
 
 func explode(impact_point : Vector2, explosion_force : float) -> void:
-	if len($Polygon2D.polygon) == 0:
-		print_debug("Polygon has not been drawn ; can't explode asteroid!")
-		return
 	visible = false
 	if is_instance_valid(idle_anim_tween):
 		idle_anim_tween.kill()
 	$StaticBody2D.queue_free()
+	if len($Polygon2D.polygon) == 0:
+		print_debug("Polygon has not been drawn ; can't explode asteroid!")
+		return
 	var fragments := GP1_TD.shatter_polygon($Polygon2D.polygon, randi_range(8, 14))
 	for fragment : PackedVector2Array in fragments:
 		AsteroidFragment.spawn_asteroid_fragment(
@@ -35,7 +35,9 @@ func explode(impact_point : Vector2, explosion_force : float) -> void:
 			global_rotation, 
 			fragment, 
 			GP1_TD.explode_fragment($Polygon2D.polygon, global_position, fragment, 
-									impact_point, explosion_force)
+									impact_point, explosion_force),
+			polygon_intersection(fragment, $PolygonInner1.polygon),
+			polygon_intersection(fragment, $PolygonInner2.polygon)
 		)
 
 func generate_asteroid_polygon() -> void:
@@ -72,3 +74,62 @@ func idle_animation() -> void:
 	idle_anim_tween.tween_property(self, "rotation", rotation_start, anim_time)
 	idle_anim_tween.tween_property(self, "rotation", rotation_end, anim_time)
 	idle_anim_tween.finished.connect(idle_animation)
+
+
+
+# Returns the intersection polygon (as PackedVector2Array)
+# between polygon_a and polygon_b.
+# If they don't intersect, returns an empty PackedVector2Array.
+static func polygon_intersection(polygon_a: PackedVector2Array, polygon_b: PackedVector2Array) -> PackedVector2Array:
+	var subject: Array[Vector2] = []
+	for v in polygon_a:
+		subject.append(v)
+	
+	for i in range(polygon_b.size()):
+		var A := polygon_b[i]
+		var B := polygon_b[(i + 1) % polygon_b.size()]
+		var edge_normal := Vector2(B.y - A.y, -(B.x - A.x)) # inward normal
+		subject = _clip_polygon(subject, A, edge_normal)
+		if subject.is_empty():
+			return PackedVector2Array() # no intersection
+	
+	var result := PackedVector2Array()
+	for v in subject:
+		result.append(v)
+	return result
+
+# Helper: clip polygon by one edge of the clipper polygon
+# Keeps points on the inside side of the edge
+static func _clip_polygon(subject: Array[Vector2], clip_edge_point: Vector2, clip_edge_normal: Vector2) -> Array[Vector2]:
+	var output: Array[Vector2] = []
+	var count := subject.size()
+	if count == 0:
+		return output
+	
+	for i in range(count):
+		var current := subject[i]
+		var prev := subject[(i - 1 + count) % count]
+		var current_inside := _is_inside(current, clip_edge_point, clip_edge_normal)
+		var prev_inside := _is_inside(prev, clip_edge_point, clip_edge_normal)
+	
+		if current_inside:
+			if not prev_inside:
+				output.append(_compute_intersection(prev, current, clip_edge_point, clip_edge_normal))
+			output.append(current)
+		elif prev_inside:
+			output.append(_compute_intersection(prev, current, clip_edge_point, clip_edge_normal))
+	return output
+
+# Helper: check if point is inside the half-plane
+static func _is_inside(point: Vector2, edge_point: Vector2, edge_normal: Vector2) -> bool:
+	return (point - edge_point).dot(edge_normal) <= 0.0
+
+# Helper: compute intersection between polygon edge and clip edge
+static func _compute_intersection(p1: Vector2, p2: Vector2, edge_point: Vector2, edge_normal: Vector2) -> Vector2:
+	var direction := p2 - p1
+	var denom := direction.dot(edge_normal)
+	if abs(denom) < 1e-12:
+		return p2 # parallel or coincident edge
+	var t := (edge_point - p1).dot(edge_normal) / denom
+	t = clamp(t, 0.0, 1.0)
+	return p1 + direction * t

@@ -25,11 +25,13 @@ color = Color(0.6, 0.439216, 0.333333, 1)
 color = Color(0.541176, 0.396078, 0.298039, 1)
 
 [node name="PolygonInner2" type="Polygon2D" parent="."]
-color = Color(0.513726, 0.376471, 0.286275, 1)
+color = Color(0.462745, 0.337255, 0.25098, 1)
+polygon = PackedVector2Array(547.5, -57)
+uv = PackedVector2Array(547.5, -57)
 
 [node name="Line2D" type="Line2D" parent="."]
 closed = true
-width = 5.0
+width = 8.0
 default_color = Color(0.360784, 0.266667, 0.203922, 1)
 
 [node name="Node2D" type="Node2D" parent="."]
