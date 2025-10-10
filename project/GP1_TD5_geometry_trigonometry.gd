@@ -244,21 +244,19 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 ####### EXERCICE 6 #############################################################
 # Détruire un astéroïde
 
-# Returns a list of polygon fragments (PackedVector2Array)
-# polygon: PackedVector2Array
-# n: number of desired fragments
-# rng_seed: optional seed (-1 = random)
-func shatter_polygon(polygon: PackedVector2Array, n: int, rng_seed: int = -1) -> Array:
-	if polygon.size() < 3 or n <= 0:
+# Fracturer un polygone en un nombre de fragments donnés ;
+# Par simplicité, on peut donner qu'un fragment est un triangle, composé d'un point
+# dans le polygone commun à tous les fragments, et de deux points sur la bordure du
+# polygone.
+# BONUS : Utiliser un diagramme de Voronoi (plutôt complexe)
+func shatter_polygon(polygon: PackedVector2Array, nb_fragments : int) -> Array:
+	if polygon.size() < 3 or nb_fragments <= 0:
 		return []
-	
 	var rng := RandomNumberGenerator.new()
-	if rng_seed >= 0:
-		rng.seed = rng_seed
-	else:
-		rng.randomize()
+	rng.randomize()
 	
-	var seeds: Array = _sample_points_in_polygon(polygon, n, rng)
+	# Les seeds sont les points utilisés ensuite pour la découpe du polygone
+	var seeds: Array[Vector2] = _sample_points_in_polygon(polygon, nb_fragments, rng)
 	var poly_arr: Array[Vector2] = []
 	for v in polygon:
 		poly_arr.append(v)
@@ -285,11 +283,11 @@ func shatter_polygon(polygon: PackedVector2Array, n: int, rng_seed: int = -1) ->
 	return fragments
 
 
-# -------------------------------------------------------------
-# Helper: sample random points inside polygon using rejection
-# -------------------------------------------------------------
-func _sample_points_in_polygon(polygon: PackedVector2Array, n: int, rng: RandomNumberGenerator) -> Array:
-	var pts: Array = []
+# Helper: obtient un échantillon de points "aléatoires" dans le polygone
+# nom de l'algo -> rejection sampling
+func _sample_points_in_polygon(polygon: PackedVector2Array, n: int, 
+								rng: RandomNumberGenerator) -> Array[Vector2]:
+	var pts: Array[Vector2] = []
 	
 	var xmin := INF
 	var xmax := -INF
@@ -303,7 +301,7 @@ func _sample_points_in_polygon(polygon: PackedVector2Array, n: int, rng: RandomN
 		ymax = max(ymax, v.y)
 	
 	var attempts := 0
-	while pts.size() < n and attempts < n * 5000:
+	while (pts.size() < n) and (attempts < n * 5000):
 		attempts += 1
 		var p := Vector2(rng.randf_range(xmin, xmax), rng.randf_range(ymin, ymax))
 		if _point_in_polygon(p, polygon):
@@ -312,9 +310,7 @@ func _sample_points_in_polygon(polygon: PackedVector2Array, n: int, rng: RandomN
 	return pts
 
 
-# -------------------------------------------------------------
-# Helper: point-in-polygon (ray casting)
-# -------------------------------------------------------------
+# Helper: retourne si un point est dans le polygon donné
 func _point_in_polygon(pt: Vector2, polygon: PackedVector2Array) -> bool:
 	var inside := false
 	var m := polygon.size()
@@ -328,11 +324,8 @@ func _point_in_polygon(pt: Vector2, polygon: PackedVector2Array) -> bool:
 				inside = not inside
 	return inside
 
-
-# -------------------------------------------------------------
-# Helper: clip polygon by half-plane (Sutherland–Hodgman)
-# Keeps points where dot(p, normal) <= C
-# -------------------------------------------------------------
+# Helper: découpe le polygone avec un demi-plan
+# algo -> Sutherland–Hodgman
 func _clip_by_halfplane(poly_in: Array[Vector2], normal: Vector2, C: float) -> Array[Vector2]:
 	var out: Array = []
 	var m := poly_in.size()
