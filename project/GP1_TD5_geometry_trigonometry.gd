@@ -244,9 +244,10 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 ####### EXERCICE 6 #############################################################
 # Détruire un astéroïde
 
-# Fracturer un polygone en un nombre de fragments donnés
-# On ne le fera pas mais à tester: générer des fragments qui prennent en compte
-# les différentes couches de polygones de couleurs différentes (cf asteroid.tscn)
+# Fracturer un polygone en un nombre de fragments donnés ;
+# On peut considérer que les fragments sont tous les triangles, et ont tous en
+# commun le centre du polygon (par simplicité)
+# Sinon, algo de Voronoi
 func shatter_polygon(polygon : PackedVector2Array,
 						nb_fragments : int) -> Array[PackedVector2Array]:
 	if polygon.size() < 3:
