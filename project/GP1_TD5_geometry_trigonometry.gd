@@ -52,9 +52,6 @@ FONCTIONS POUR VOUS AIDER:
 
 """
 
-func dummy():
-	#lerp_angle(a, b, weight)
-	pass
 
 
 ####### EXERCICE 1 #############################################################
