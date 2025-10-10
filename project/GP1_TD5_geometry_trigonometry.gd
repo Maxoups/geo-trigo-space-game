@@ -248,7 +248,7 @@ func generate_random_polygon(external_radius : float, internal_radius : float,
 # Par simplicité, on peut donner qu'un fragment est un triangle, composé d'un point
 # dans le polygone commun à tous les fragments, et de deux points sur la bordure du
 # polygone.
-# BONUS : Utiliser un diagramme de Voronoi (plutôt complexe)
+# BONUS : Utiliser un diagramme de Voronoi (plutôt complexe, déconseillé pour l'instant)
 func shatter_polygon(polygon: PackedVector2Array, nb_fragments : int) -> Array:
 	if polygon.size() < 3 or nb_fragments <= 0:
 		return []
