@@ -298,10 +298,10 @@ position = Vector2(1022, 457)
 target = NodePath("../Asteroid7Target")
 
 [node name="Label" parent="MotherShip" index="0"]
-offset_left = 240.0
-offset_top = -672.0
-offset_right = 994.0
-offset_bottom = -355.0
+offset_left = 252.0
+offset_top = -568.0
+offset_right = 1006.0
+offset_bottom = -251.0
 text = "MotherShip:
     position = (x=1022.00, y=457.00)
     rotation = 64.08
